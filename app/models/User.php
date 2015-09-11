@@ -40,6 +40,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		'password' => 'required|confirmed'
 	);
 
-	protected $hashable = ['password'];
+	public function setPasswordAttribute($value)
+	{
+	    $this->attributes['password'] = Hash::make($value);
+	}
 
 }
