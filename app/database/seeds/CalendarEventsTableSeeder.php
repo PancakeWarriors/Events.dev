@@ -12,11 +12,14 @@ class CalendarEventsTableSeeder extends Seeder {
 		for($i=0; $i<20; $i++)
 		{
 			$calendarEvent = new CalendarEvent();
-			$calendarEvent->start_dateTime = $faker->dateTime($format = 'Y-m-d H:i:s');
-			$calendarEvent->end_dateTime = $faker->dateTime($format = 'Y-m-d H:i:s');
+			$calendarEvent->start_dateTime = $faker->date($format = 'Y-m-d H:i:s');
+			$calendarEvent->end_dateTime = $faker->date($format = 'Y-m-d H:i:s');
 			$calendarEvent->title = $faker->text(100);
 			$calendarEvent->description = $faker->text(255);
-			$calendarEvent->price = $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 500);
+			$calendarEvent->user_id = $faker->numberBetween($min = 1, $max = 10);
+			$calendarEvent->location_id = $faker->numberBetween($min = 1, $max = 10);
+			// $calendarEvent->price = $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 500);
+			$calendarEvent->save();
 		}
 	}
 
