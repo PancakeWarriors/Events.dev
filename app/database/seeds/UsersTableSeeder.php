@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder {
 	       $user->last_name  = $_ENV['USER_LAST_NAME'];
 	       $user->email = $_ENV['USER_EMAIL'];
 	       $user->password = $_ENV['USER_PASS']; 
+	       $user->password_confirmation = $_ENV['USER_PASS']; 
 	       $user->save();
 	    }
 	    catch(Exception $e){
@@ -37,6 +38,7 @@ class UsersTableSeeder extends Seeder {
 			$user = new User();
 			$user->email = $faker->unique()->email();
 			$user->password = $faker->password;
+			$user->password_confirmation = $user->password;
 			$user->first_name = $faker->firstName();
 			$user->last_name = $faker->lastName(); 
 			$user->save();	
