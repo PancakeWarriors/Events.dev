@@ -13,7 +13,9 @@ class DatabaseSeeder extends Seeder {
 
 		DB::table('users')->delete();
 		DB::table('calendar_events')->delete();
+		DB::table('locations')->delete();
 		$this->call('UsersTableSeeder');
+		$this->call('LocationsTableSeeder');
 		$this->call('CalendarEventsTableSeeder');
 	}
 
