@@ -18,7 +18,7 @@ class CalendarEventsTableSeeder extends Seeder {
 			$calendarEvent->description = $faker->text(255);
 			$calendarEvent->user_id = $faker->numberBetween($min = 1, $max = 10);
 			$calendarEvent->location_id = $faker->numberBetween($min = 1, $max = 10);
-			// $calendarEvent->price = $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 500);
+			$calendarEvent->price = $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 500);
 			$calendarEvent->save();
 		}
 	}
