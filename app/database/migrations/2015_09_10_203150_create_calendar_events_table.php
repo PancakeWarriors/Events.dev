@@ -19,6 +19,7 @@ class CreateCalendarEventsTable extends Migration {
 			$table->dateTime('start_dateTime');
 			$table->dateTime('end_dateTime');
 			$table->string('description');
+			$table->float('price');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->integer('location_id')->unsigned();
