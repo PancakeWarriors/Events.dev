@@ -5,7 +5,7 @@ use \Esensi\Model\Model;
 class Locations extends Eloquent {
 	
 	protected $fillable = [];
-	protected $table = '';
+	protected $table = 'locations';
 
 	public function calendarEvents()
 	{

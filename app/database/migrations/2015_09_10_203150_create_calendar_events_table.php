@@ -23,7 +23,7 @@ class CreateCalendarEventsTable extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->integer('location_id')->unsigned();
-			$table->foreign('location_id')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
 			$table->timestamps();
 		});
 	}
