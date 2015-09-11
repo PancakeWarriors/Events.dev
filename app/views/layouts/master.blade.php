@@ -31,12 +31,12 @@
 			<div class="navbar-header">
 				<!-- Button for smallest screens -->
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"><span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-				<a class="navbar-brand" href="index.html"><span class="glyphicon glyphicon-calendar"></span>EventFinder</a>
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-calendar"></span>EventFinder</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="about.html">About</a></li>
+					<li class="active"><a href="/">Home</a></li>
+					<li><a href="events">Events</a></li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -52,17 +52,6 @@
 	</div>
 	<!-- /.navbar -->
 
-	<!-- Header -->
-	<header id="head">
-		<div class="container">
-			<div class="row">
-				<h1 class="lead">AWESOME, CUSTOMIZABLE, FREE</h1>
-				<p class="tagline">PROGRESSUS: free business bootstrap template by <a href="http://www.gettemplate.com/?utm_source=progressus&amp;utm_medium=template&amp;utm_campaign=progressus">GetTemplate</a></p>
-				<p><a href="http://www.gettemplate.com/" class="btn btn-default btn-lg" role="button">MORE INFO</a> <a class="btn btn-download btn-action btn-lg" href="http://www.gettemplate.com/downloads/progressus.zip" role="button">DOWNLOAD NOW</a></p>
-			</div>
-		</div>
-	</header>
-	<!-- /Header -->
 
 	@yield('content')
 
