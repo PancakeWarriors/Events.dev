@@ -5,7 +5,7 @@ class UsersController extends \BaseController {
 	public function showLogin()
 	{
 		if(Auth::check()){
-			return Redirect::action('#Controller@index');
+			return Redirect::action('CalendarEventsController@index');
 		}else{
 			return View::make('login');
 		}
@@ -21,7 +21,7 @@ class UsersController extends \BaseController {
 		}else{
 			Session::flash('errorMessage', 'Email and password combination failed');
 			Log::info('validator failed', Input::all());
-			return Redirect::action('#Controller@showLogin');
+			return Redirect::action('UsersController@showLogin');
 		}
 	}
 
@@ -37,7 +37,7 @@ class UsersController extends \BaseController {
 		if(!Auth::check()){
 			return View::make('new_user');
 		}else{
-			return Redirect::action('#Controller@index');
+			return Redirect::action('CalendarEventsController@index');
 		}
 	}
 
@@ -59,7 +59,7 @@ class UsersController extends \BaseController {
 			$email = Input::get('email');
 			$password = Input::get('password');
 			Auth::attempt(array('email' => $email, 'password' => $password));
-			return Redirect::action('#Controller@index');
+			return Redirect::action('CalendarEventsController@index');
 		}
 	}
 
@@ -67,9 +67,9 @@ class UsersController extends \BaseController {
 	{
 		if(Auth::check()){
 			$user = Auth::user();
-			return View::make('#')->with('user',$user);
+			return View::make('users.edit')->with('user',$user);
 		}else{
-			return Redirect::action('#Controller@index');
+			return Redirect::action('CalendarEventsController@index');
 		}
 	}
 
@@ -90,7 +90,7 @@ class UsersController extends \BaseController {
 			}
 			$profile->save();
 			Session::flash('updatedProfile', 'Profile Updated!');
-			return Redirect::action('#Controller@index');
+			return Redirect::action('CalendarEventsController@index');
 		}
 	}
 }
