@@ -6,9 +6,13 @@ class CalendarEvent extends Model {
 	protected $fillable = [];
 	protected $table = 'calendar_events';
 
-	public function calendarEvents()
+	public function location()
 	{
 		return $this->belongsTo('Location');
+	}
+	public function user()
+	{
+	    return $this->belongsTo('User');
 	}
 	
 	protected $rules = array(

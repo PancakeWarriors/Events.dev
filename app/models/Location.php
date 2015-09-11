@@ -9,7 +9,7 @@ class Locations extends \Model {
 
 	public function calendarEvents()
 	{
-		return $this->hasMany('calendarEvents');
+		return $this->hasMany('CalendarEvent');
 	}
 
 	public static $rules = array(
