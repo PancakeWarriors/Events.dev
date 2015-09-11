@@ -9,11 +9,16 @@ class LocationsTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		foreach(range(1, 10) as $index)
+		for($i=0; $i<20; $i++)
 		{
-			Location::create([
+			$location = new Locations();
+			$location->title = $faker->text(20);
+			$location->address = $faker->streetAddress();
+			$location->city = $faker->city();
+			$location->state = $faker->stateAbbr();
+			$location->zip = $faker->randomNumber($nvDigits = 5); 
+			$location->save();	
 
-			]);
 		}
 	}
 
