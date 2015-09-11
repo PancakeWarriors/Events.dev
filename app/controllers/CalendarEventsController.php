@@ -10,7 +10,8 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$events = CalendarEvent::with('user')->orderBy('updated_at', 'desc');
+		return View::make('#.index')->with(['events' => $events]);
 	}
 
 	/**
@@ -21,7 +22,7 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		retrn View::make('#.create');
 	}
 
 	/**
@@ -32,7 +33,24 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = Validator::make(Input::all(), CalendarEvent::$rules);
+		if($validator->fails()){
+			Session::flash('errorMessage', 'Something went wrong, refer to the red text below:');
+			Log::info('validator failed', Input::all());
+			return Redirect::back()->withInput()->withErrors($validator);
+		}else{
+			$calendarEvent = new CalendarEvent();
+			$calendarEvent->title = Input::get('title');
+			$calendarEvent->body = Input::get('body');
+			$calendarEvent->user_id = Auth::id();
+			$calendarEvent->description = Input::get('description');
+			$calendarEvent->save();
+			$tags = explode(",", Input::get('tags'));
+			foreach ($tags as $tag) {
+				calendarEvent::storeTags($tag,$calendarEvent);
+			}
+			return Redirect::action('calendarEventsController@index');
+		}
 	}
 
 	/**
