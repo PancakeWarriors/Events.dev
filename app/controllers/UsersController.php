@@ -7,7 +7,7 @@ class UsersController extends \BaseController {
 		if(Auth::check()){
 			return Redirect::action('CalendarEventsController@index');
 		}else{
-			return View::make('login');
+			return View::make('users.signin');
 		}
 	}
 
@@ -29,13 +29,13 @@ class UsersController extends \BaseController {
 	{
 		Auth::logout();
 		Session::flash('successMessage', 'Goodbye!');
-		return Redirect::to('/login');
+		return Redirect::to('users.signin');
 	}
 
 	public function showCreate()
 	{
 		if(!Auth::check()){
-			return View::make('new_user');
+			return View::make('users.create');
 		}else{
 			return Redirect::action('CalendarEventsController@index');
 		}
