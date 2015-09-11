@@ -2,7 +2,7 @@
 
 use \Esensi\Model\Model;
 
-class CalendarEvent extends Model {
+class CalendarEvent extends Eloquent {
 	protected $fillable = [];
 	protected $table = 'calendar_events';
 
