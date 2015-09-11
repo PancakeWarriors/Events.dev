@@ -40,6 +40,13 @@ class User extends Model implements UserInterface, RemindableInterface {
 		'password' => 'required|confirmed'
 	);
 
+	protected $rules2 = array(
+		'email' => 'email|max:255|unique:users',
+		'first_name' => 'max:255',
+		'last_name' => 'max:255',
+		'password' => 'confirmed'	
+	);
+
 	protected $hashable = ['password'];
 
 }
