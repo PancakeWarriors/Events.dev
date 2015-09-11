@@ -28,7 +28,7 @@ class UsersController extends \BaseController {
 	public function doLogout()
 	{
 		Auth::logout();
-		Session::flash('logoutMessage', 'Goodbye!');
+		Session::flash('successMessage', 'Goodbye!');
 		return Redirect::to('/login');
 	}
 
@@ -89,7 +89,7 @@ class UsersController extends \BaseController {
 				$profile->password = Input::get('password');
 			}
 			$profile->save();
-			Session::flash('updatedProfile', 'Profile Updated!');
+			Session::flash('successMessage', 'Profile Updated!');
 			return Redirect::action('CalendarEventsController@index');
 		}
 	}
