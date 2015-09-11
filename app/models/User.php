@@ -17,7 +17,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
+
+	public function calendarEvents()
+	{
+	    return $this->hasMany('CalendarEvent');
+	}
+
 	protected $fillable = ['first_name', 'last_name', 'email', 'password'];
+
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -28,16 +35,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
 	protected $rules = array(
 		'email' => 'required|email|max:255|unique:users',
-		'first_name' => 'required||max:255',
-		'last_name' => 'required||max:255',
+		'first_name' => 'required|max:255',
+		'last_name' => 'required|max:255',
 		'password' => 'required|confirmed'
 	);
 
 	protected $hashable = ['password'];
-
-	public function getRules()
-	{
-		return $this->rules;
-	}
 
 }
