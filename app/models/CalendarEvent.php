@@ -11,7 +11,7 @@ class CalendarEvent extends Model {
 		return $this->belongsTo('Location');
 	}
 	
-	public static $rules = array(
+	protected $rules = array(
 		'start_dateTime' => 'required|max:255',
 		'end_dateTime' => 'required|max:255',
 		'title' => 'required|max:255',
