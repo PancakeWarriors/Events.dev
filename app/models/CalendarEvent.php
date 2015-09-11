@@ -37,7 +37,7 @@ class CalendarEvent extends Model {
 		// 	return "?tag=" . $getRequests['tag'];
 		// }elseif(isset($getRequests['search'])){
 		// 	return "?search=" . $getRequests['search'];
-		}
+		// }
 	}
 
 	public static function findTag($tag)
