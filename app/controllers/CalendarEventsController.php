@@ -17,7 +17,7 @@ class CalendarEventsController extends \BaseController {
 	public function index()
 	{
 		$events = CalendarEvent::with('user')->orderBy('updated_at', 'desc');
-		return View::make('index')->with(['events' => $events]);
+		return View::make('events.index')->with(['events' => $events]);
 	}
 
 	/**
@@ -58,7 +58,7 @@ class CalendarEventsController extends \BaseController {
 			foreach ($tags as $tag) {
 				calendarEvent::storeTags($tag,$calendarEvent);
 			}
-			return Redirect::action('calendarEventsController@index');
+			return Redirect::action('CalendarEventsController@index');
 		}
 	}
 
