@@ -2,7 +2,7 @@
 
 use \Esensi\Model\Model;
 
-class Locations extends \Model {
+class Locations extends Eloquent {
 	
 	protected $fillable = [];
 	protected $table = '';
