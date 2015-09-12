@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'CalendarEventsController@index');
+Route::get('/', 'HomeController@showHome');
 
 
 
