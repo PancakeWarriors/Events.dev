@@ -19,8 +19,6 @@
 			<header class="page-header">
 				<h1 class="page-title">Upcoming Events</h1>
 			</header>
-
-			{{{ print_r($calendarEvents) }}}
 			@forelse($calendarEvents as $event)
 				<h3>{{{ $event->title }}}</h3>
 				<h5>{{{ $event->start_dateTime }}}</h5>
