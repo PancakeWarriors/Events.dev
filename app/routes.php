@@ -13,10 +13,11 @@
 
 Route::get('/', 'HomeController@showHome');
 
+Route::get('/signin', 'HomeController@showSignin');
 
 
 
 
-
+Route::get('/events/{id}', 'CalendarEventsController@show');
 
 Route::resource('/events', 'CalendarEventsController');
