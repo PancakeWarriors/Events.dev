@@ -16,7 +16,7 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$calendarEvent = CalendarEvent::all();
+		$calendarEvent = CalendarEvent::with('User');
 		return View::make('events.index')->with(['calendarEvents' => $calendarEvent]);
 	}
 
