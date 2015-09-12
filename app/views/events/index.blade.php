@@ -20,6 +20,13 @@
 				<h1 class="page-title">Upcoming Events</h1>
 			</header>
 			{{dd($calendarEvents)}}
+			@forelse($calendarEvents as $event)
+				<h3>{{{ $event->title }}}</h3>
+				<h5>{{{ $event->start_dateTime }}}</h5>
+				<p><img src="http://lorempixel.com/400/400" alt="" class="img-rounded pull-right" width="300" height="200" > {{{ $event->description }}}</p>
+			@empty
+			    <h3>No events found.</h3>
+			@endforelse
 
 
 		</article>
