@@ -19,4 +19,4 @@ Route::get('/', 'HomeController@showHome');
 
 
 
-Route::resource('events', 'CalendarEventsController');
+Route::resource('/events', 'CalendarEventsController');
