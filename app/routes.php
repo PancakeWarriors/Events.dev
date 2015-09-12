@@ -19,4 +19,4 @@ Route::get('/', 'CalendarEventsController@index');
 
 
 
-Route::resource('events', 'CalendarEventsController');
+Route::resource('/events', 'CalendarEventsController');
