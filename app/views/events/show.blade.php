@@ -92,7 +92,7 @@
 		<aside class="col-sm-4 sidebar sidebar-right">
 
 			<div class="widget">
-				<h4>Vacancies</h4>
+				<h4>Categories</h4>
 				<ul class="list-unstyled list-spaces">
 					<li><a href="">Lorem ipsum dolor</a><br><span class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, laborum.</span></li>
 					<li><a href="">Totam, libero, quis</a><br><span class="small text-muted">Suscipit veniam debitis sed ipsam quia magnam eveniet perferendis nisi.</span></li>
