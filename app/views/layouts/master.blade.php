@@ -7,7 +7,8 @@
 	<meta name="author"      content="Sergey Pozhilov (GetTemplate.com)">
 
 	<title>Events</title>
-
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/fonts/fontawesome-webfont.ttf">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/fonts/fontawesome-webfont.woff">
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/font-awesome.min.css">
@@ -140,7 +141,7 @@
 		<div class="fpro-intro">See also:</div>
 		<h4 class="fpro-caption"><a target="_blank" href="/pro/progressus.html">Progressus PRO <span>Multipurpose Premium Bootstrap Temlplate</span></a> </h4>
 		<div class="fpro-media">
-			<a target="_blank" href="/pro/progressus.html"><img src="/images/pp-shots.png" alt="Progressus PRO"></a>
+			<a target="_blank" href="/pro/progressus.html"><img src="" alt="Progressus PRO"></a>
 			<div class="fpro-desc">
 				<p>
 					Progressus PRO is a clean and feature-rich Bootstrap theme which will save you a lot of time &amp; effort.
