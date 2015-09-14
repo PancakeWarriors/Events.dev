@@ -63,9 +63,29 @@ class UsersController extends \BaseController {
 		}
 	}
 
-	public function showEdit()
+	public function showUser($id)
 	{
-		if(Auth::check()){
+		if(User::find($id)){
+			$user = User::find($id);
+			return View::make('users.show')->with('user', $user);
+		}else{
+			App::abort(404);
+		}
+	}
+
+	public function showCalendar($id)
+	{
+		if(Auth::id() == $id){
+			$user = Auth::user();
+			return View::make('users.calendar')->with('user',$user);
+		}else{
+			return Redirect::action('CalendarEventsController@index');
+		}
+	}
+
+	public function edit($id)
+	{
+		if(Auth::id() == $id){
 			$user = Auth::user();
 			return View::make('users.edit')->with('user',$user);
 		}else{

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +29,9 @@
 
 <body class="home">
 	<!-- Fixed navbar -->
+
+	{{-- {{ Request::url() }} --}}
+
 	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
 		<div class="container">
 			<div class="navbar-header">
@@ -39,24 +41,25 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="{{{ action('CalendarEventsController@index') }}}">Events</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+					<li {{ Request::is('/')? 'class="active"': '' }}><a href="/">Home</a></li>
+					<li {{ Request::is('events')? 'class="active"': '' }}><a href="{{{ action('CalendarEventsController@index') }}}">Events</a></li>
+					<li {{ Request::is('show')||Request::is('calendar')? 'class="active"': '' }} class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="sidebar-left.html">Left Sidebar</a></li>
-							<li class="active"><a href="">Right Sidebar</a></li>
+							<li {{ Request::is('show')? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
+							<li {{ Request::is('calendar')? 'class="active"': '' }}><a href="">Calendar</a></li>
 						</ul>
 					</li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a class="btn" href="signin">SIGN IN / SIGN UP</a></li>
+					@if (Auth::check()) 
+						<li><a href="{{{ action('UsersController@doLogout') }}}">Logout</a></li>
+					@else
+						<li {{ Request::is('signin')? 'class="active"': '' }}><a class="btn" href="{{{ action('UsersController@showLogin') }}}">SIGN IN / SIGN UP</a></li>
+					@endif
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
 	</div>
 	<!-- /.navbar -->
-
-
 	@yield('content')
 
 	<!-- /social links -->
