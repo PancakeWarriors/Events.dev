@@ -19,9 +19,5 @@ class HomeController extends BaseController {
 	{
 		return View::make('index');
 	}
-	public function showSignin()
-	{
-		return View::make('users.signin');
-	}
 
 }

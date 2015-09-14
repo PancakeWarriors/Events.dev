@@ -11,12 +11,33 @@
 |
 */
 
+// HOME
+
 Route::get('/', 'HomeController@showHome');
 
-Route::get('/signin', 'HomeController@showSignin');
+Route::get('/signin', 'UsersController@showLogin');
 
+// USERS
 
+Route::get('login', 'UsersController@showLogin');
 
+Route::post('login', 'UsersController@doLogin');
+
+Route::get('logout', 'UsersController@doLogout');
+
+Route::get('users/{id}', 'UsersController@showUser');
+
+Route::get('users/{id}/calendar', 'UsersController@showCalendar');
+
+Route::get('userCreate', 'UsersController@showCreate');
+
+Route::post('userCreate', 'UsersController@newUser');
+
+Route::get('users/{id}/edit', 'UsersController@edit');
+
+Route::post('users/{id}/edit', 'UsersController@editProfile');
+
+// EVENTS
 
 Route::get('/events/{id}', 'CalendarEventsController@show');
 

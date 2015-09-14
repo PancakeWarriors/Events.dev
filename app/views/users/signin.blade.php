@@ -19,7 +19,9 @@
 			<header class="page-header">
 				<h1 class="page-title">Sign in</h1>
 			</header>
-
+			@if (Session::has('errorMessage'))
+			    <div class="alert alert-danger">{{{ Session::get('errorMessage') }}}</div>
+			@endif
 			<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -27,14 +29,14 @@
 						<p class="text-center text-muted">Don't have an account? <a href="signup">Signup</a> to create events or add them to your calendar. </p>
 						<hr>
 
-						<form>
+						{{ Form::open(array('action' => 'UsersController@doLogin')) }}
 							<div class="top-margin">
-								<label>Username/Email <span class="text-danger">*</span></label>
-								<input type="text" class="form-control">
+								<label for="email">Email <span class="text-danger">*</span></label>
+								<input type="email" class="form-control" id="email" name="email" value="{{{ Input::old('email') }}}">
 							</div>
 							<div class="top-margin">
-								<label>Password <span class="text-danger">*</span></label>
-								<input type="password" class="form-control">
+								<label for="password">Password <span class="text-danger">*</span></label>
+								<input type="password" class="form-control" id="password" name="password" value="{{{ Input::old('password') }}}">
 							</div>
 
 							<hr>
@@ -47,7 +49,7 @@
 									<button class="btn btn-action" type="submit">Sign in</button>
 								</div>
 							</div>
-						</form>
+						{{ Form::close() }}
 					</div>
 				</div>
 
