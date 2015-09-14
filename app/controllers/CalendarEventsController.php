@@ -73,7 +73,7 @@ class CalendarEventsController extends \BaseController {
 	public function show($id)
 	{
 		if(CalendarEvent::find($id)){		
-			$calendarEvent = CalendarEvent::find($id);
+			$event = CalendarEvent::find($id);
 			return View::make('events.show')->with('event', $event);
 		}else{
 			App::abort(404);

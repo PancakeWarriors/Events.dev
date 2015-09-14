@@ -8,7 +8,7 @@
 <div class="container">
 
 	<ol class="breadcrumb">
-		<li><a href="index.html">Home</a></li>
+		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li class="active">Events</li>
 	</ol>
 
@@ -20,7 +20,9 @@
 				<h1 class="page-title">Upcoming Events</h1>
 			</header>
 			@forelse($calendarEvents as $event)
-				<h3>{{{ $event->title }}}</h3>
+				<h3>
+					<a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{$event->title}}}</a>
+				</h3>
 				<h5>{{{ $event->start_dateTime }}}</h5>
 				<p><img src="http://lorempixel.com/400/400" alt="" class="img-rounded pull-right" width="300" height="200" > {{{ $event->description }}}</p>
 			@empty
