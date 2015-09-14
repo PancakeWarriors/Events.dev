@@ -20,11 +20,16 @@
 				<h1 class="page-title">Upcoming Events</h1>
 			</header>
 			@forelse($calendarEvents as $event)
-				<h3>
-					<a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{$event->title}}}</a>
-				</h3>
-				<h5>{{{ $event->start_dateTime }}}</h5>
-				<p><img src="http://lorempixel.com/400/400" alt="" class="img-rounded pull-right" width="300" height="200" > {{{ $event->description }}}</p>
+				<div class="container col-md-12">
+					<h3>
+						<a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{$event->title}}}
+					</h3>
+					<p><img src="http://lorempixel.com/400/400" alt="" class="img-rounded pull-left" width="300" height="200" > {{{ $event->description }}}</p>
+					<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
+					<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
+
+				</div>
+
 			@empty
 			    <h3>No events found.</h3>
 			@endforelse

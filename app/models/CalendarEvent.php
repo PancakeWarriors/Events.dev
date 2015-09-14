@@ -21,9 +21,9 @@ class CalendarEvent extends Model {
 	}
 	
 	protected $rules = array(
-		'start_dateTime' => 'required|max:255',
-		'end_dateTime' => 'required|max:255',
-		'title' => 'required|max:255',
+		'start_dateTime' => 'required',
+		'end_dateTime' => 'required',
+		'title' => 'required|max:50',
 		'description' => 'required|max:255',
 		'price' => 'required|max:255',
 	);
