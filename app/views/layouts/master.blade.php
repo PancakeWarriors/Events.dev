@@ -43,14 +43,14 @@
 				<ul class="nav navbar-nav pull-right">
 					<li {{ Request::is('/')? 'class="active"': '' }}><a href="/">Home</a></li>
 					<li {{ Request::is('events')? 'class="active"': '' }}><a href="{{{ action('CalendarEventsController@index') }}}">Events</a></li>
-					<li {{ Request::is('show')||Request::is('calendar')? 'class="active"': '' }} class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li {{ Request::is('show')? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
-							<li {{ Request::is('calendar')? 'class="active"': '' }}><a href="">Calendar</a></li>
-						</ul>
-					</li>
 					@if (Auth::check()) 
+						<li {{ Request::is('show')||Request::is('calendar')? 'class="active"': '' }} class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li {{ Request::is('show')? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
+								<li {{ Request::is('calendar')? 'class="active"': '' }}><a href="">Calendar</a></li>
+							</ul>
+						</li>
 						<li><a href="{{{ action('UsersController@doLogout') }}}">Logout</a></li>
 					@else
 						<li {{ Request::is('signin')? 'class="active"': '' }}><a class="btn" href="{{{ action('UsersController@showLogin') }}}">SIGN IN / SIGN UP</a></li>

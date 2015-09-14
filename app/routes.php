@@ -29,16 +29,14 @@ Route::get('users/{id}', 'UsersController@showUser');
 
 Route::get('users/{id}/calendar', 'UsersController@showCalendar');
 
-Route::get('userCreate', 'UsersController@showCreate');
+Route::get('signup', 'UsersController@showCreate');
 
-Route::post('userCreate', 'UsersController@newUser');
+Route::post('signup', 'UsersController@newUser');
 
 Route::get('users/{id}/edit', 'UsersController@edit');
 
 Route::post('users/{id}/edit', 'UsersController@editProfile');
 
 // EVENTS
-
-Route::get('/events/{id}', 'CalendarEventsController@show');
 
 Route::resource('/events', 'CalendarEventsController');
