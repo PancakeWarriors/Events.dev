@@ -21,9 +21,9 @@ Route::get('/signin', 'UsersController@showLogin');
 
 Route::get('login', 'UsersController@showLogin');
 
-Route::post('login', 'UsersController@doLogin');
+Route::post('signin', 'UsersController@doLogin');
 
-Route::get('logout', 'UsersController@doLogout');
+Route::get('signout', 'UsersController@doLogout');
 
 Route::get('users/{id}', 'UsersController@showUser');
 
