@@ -17,7 +17,7 @@
 		<!-- Event main content -->
 		<article class="col-sm-8 maincontent">
 			<header class="page-header">
-				<h1 class="page-title">{{{ $event->title }}}</h1>
+				<h1 class="page-title"><strong>{{{ $event->title }}}</strong></h1>
 			</header>
 			<!-- success/error messages -->
 		    @if (Session::has('successMessage'))
@@ -28,7 +28,7 @@
 		    @endif
 
 		    <!-- Date/Time -->
-		    <p><span class="glyphicon glyphicon-time"></span>  {{{$event->created_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s a')}}} by {{ $event->user->first_name }} {{ $event->user->last_name }}</p>
+		    <p><span class="glyphicon glyphicon-time"></span>Updated on  {{{$event->updated_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s a')}}} by {{ $event->user->first_name }} {{ $event->user->last_name }}</p>
 
 		    <hr>
 
@@ -61,7 +61,12 @@
 
 
 		    <!-- event description -->
-		    <p>{{{ $event->description }}}</p>
+		    <h4>{{{ $event->description }}}</h4>
+		    <hr>
+		    <p>{{{ $event->body}}}</p>
+		    <hr>
+			<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
+			<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
 
 		    {{-- tag stuff --}}
 		{{--     <p>

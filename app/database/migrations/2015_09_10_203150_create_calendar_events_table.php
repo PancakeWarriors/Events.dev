@@ -15,10 +15,11 @@ class CreateCalendarEventsTable extends Migration {
 		Schema::create('calendar_events', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('title');
+			$table->string('title', 50);
 			$table->dateTime('start_dateTime');
 			$table->dateTime('end_dateTime');
-			$table->string('description');
+			$table->string('description', 255);
+			$table->text('body', 50000);
 			$table->float('price');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
