@@ -24,7 +24,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<h3 class="thin text-center">Sign in to your account</h3>
-						<p class="text-center text-muted">Lorem ipsum dolor sit amet, <a href="signup.html">Register</a> adipisicing elit. Quo nulla quibusdam cum doloremque incidunt nemo sunt a tenetur omnis odio. </p>
+						<p class="text-center text-muted">Don't have an account? <a href="signup">Signup</a> to create events or add them to your calendar. </p>
 						<hr>
 
 						<form>
