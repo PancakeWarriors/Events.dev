@@ -13,7 +13,6 @@ class UsersTableSeeder extends Seeder {
 
     protected function createEnvUser()
     {
-    	try{
 	       $user = new User();
 	       $user->first_name = $_ENV['USER_FIRST_NAME'];
 	       $user->last_name  = $_ENV['USER_LAST_NAME'];
@@ -21,11 +20,7 @@ class UsersTableSeeder extends Seeder {
 	       $user->password = $_ENV['USER_PASS']; 
 	       $user->password_confirmation = $_ENV['USER_PASS']; 
 	       $user->save();
-	    }
-	    catch(Exception $e){
-	       // do task when error
-	       echo $e->getMessage();   // insert query
-	    }
+
     }
 
 	protected function createFakeUsers()
@@ -37,8 +32,8 @@ class UsersTableSeeder extends Seeder {
 		{
 			$user = new User();
 			$user->email = $faker->unique()->email();
-			$user->password = $faker->password;
-			$user->password_confirmation = $user->password;
+			$user->password = "me";
+			$user->password_confirmation = "me";
 			$user->first_name = $faker->firstName();
 			$user->last_name = $faker->lastName(); 
 			$user->save();	
