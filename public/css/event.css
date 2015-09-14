@@ -5,3 +5,8 @@ a:hover {
 	color: #FF9B22;
 	text-decoration: none;
 }
+.item {
+  width: 220px;
+  margin: 10px;
+  float: left;
+}
