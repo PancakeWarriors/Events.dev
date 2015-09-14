@@ -19,7 +19,7 @@ class UsersController extends \BaseController {
 		if(Auth::attempt(array('email' => $email, 'password' => $password))){
 			return Redirect::intended('/');
 		}else{
-			Session::flash('errorMessage', 'Email and password combination failed');
+			Session::flash('errorMessage', 'Email and password combination failed.');
 			Log::info('validator failed', Input::all());
 			return Redirect::action('UsersController@showLogin');
 		}
@@ -29,7 +29,7 @@ class UsersController extends \BaseController {
 	{
 		Auth::logout();
 		Session::flash('successMessage', 'Goodbye!');
-		return Redirect::to('users.signin');
+		return View::make('users.signin');
 	}
 
 	public function showCreate()
