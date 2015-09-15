@@ -9,7 +9,8 @@
 
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-		<li class="active">Events</li>
+		<li><a href="{{{ action('CalendarEventsController@index')}}}">Events</a></li>
+		<li class="active">Event</li>
 	</ol>
 
 	<div class="row">
@@ -28,7 +29,7 @@
 		    @endif
 
 		    <!-- Date/Time -->
-		    <p><span class="glyphicon glyphicon-time"></span>Updated on  {{{$event->updated_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s a')}}} by {{ $event->user->first_name }} {{ $event->user->last_name }}</p>
+		    <p><span class="glyphicon glyphicon-time"></span>Updated on  {{{$event->updated_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s a')}}} by {{ $user->first_name }} {{ $user->last_name }}</p>
 
 		    <hr>
 
@@ -67,6 +68,11 @@
 		    <hr>
 			<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
 			<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
+			<div>
+	            {{ Form::open(array('action' => array('CalendarEventsController@attending', $event->id, 'style'=>'display:inline;')))}}
+					<button type="button" class="btn btn-default">Attending</button>
+				{{ Form::close() }}
+			</div>
 
 		    {{-- tag stuff --}}
 		{{--     <p>
@@ -93,13 +99,11 @@
 
 			<div class="widget">
 				<h4>Categories</h4>
-				<ul class="list-unstyled list-spaces">
-					<li><a href="">Lorem ipsum dolor</a><br><span class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, laborum.</span></li>
-					<li><a href="">Totam, libero, quis</a><br><span class="small text-muted">Suscipit veniam debitis sed ipsam quia magnam eveniet perferendis nisi.</span></li>
-					<li><a href="">Enim, sequi dignissimos</a><br><span class="small text-muted">Reprehenderit illum quod unde quo vero ab inventore alias veritatis.</span></li>
-					<li><a href="">Suscipit, consequatur, aut</a><br><span class="small text-muted">Sed, mollitia earum debitis est itaque esse reiciendis amet cupiditate.</span></li>
-					<li><a href="">Nam, illo, veritatis</a><br><span class="small text-muted">Delectus, sapiente illo provident quo aliquam nihil beatae dignissimos itaque.</span></li>
-				</ul>
+				@forelse($tags as $tag)
+					<a href="?t={{$tag->name}}"><h5>{{{$tag->name}}}</h5></a>
+				@empty
+					<h4>No tags found.</h4>
+				@endforelse
 			</div>
 
 		</aside>

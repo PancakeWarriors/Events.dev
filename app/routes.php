@@ -38,5 +38,6 @@ Route::get('users/{id}/edit', 'UsersController@edit');
 Route::post('users/{id}/edit', 'UsersController@editProfile');
 
 // EVENTS
+Route::post('/events/{id}', 'CalendarEventsController@attending');
 
 Route::resource('/events', 'CalendarEventsController');
