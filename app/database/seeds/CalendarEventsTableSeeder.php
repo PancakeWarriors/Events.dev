@@ -9,7 +9,7 @@ class CalendarEventsTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 
-		for($i=0; $i<20; $i++)
+		for($i=0; $i<100; $i++)
 		{
 			$calendarEvent = new CalendarEvent();
 			$calendarEvent->start_dateTime = $faker->date($format = 'Y-m-d H:i:s');
@@ -20,7 +20,7 @@ class CalendarEventsTableSeeder extends Seeder {
 			$calendarEvent->user_id = $faker->numberBetween($min = 1, $max = 10);
 			$calendarEvent->location_id = $faker->numberBetween($min = 1, $max = 10);
 			$calendarEvent->price = $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 500);
-			$calendarEvent->image_url = "image.jpeg";
+			$calendarEvent->image_url = "images/image.jpeg";
 			$calendarEvent->save();
 		}
 	}

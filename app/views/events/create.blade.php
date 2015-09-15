@@ -54,11 +54,19 @@
 	</div>
 	<div class="form-group col-sm-8 col-sm-offset-1">
 		<label class="control-label" for="description">Event Description</label>
-		<textarea data-provide="markdown" class="form-control" id="description" name="description" rows="20" >{{{ Input::old('description') }}}</textarea>
+		<textarea data-provide="markdown" class="form-control" id="description" name="description" rows="2" >{{{ Input::old('description') }}}</textarea>
+	</div>
+	<div class="form-group col-sm-8 col-sm-offset-1">
+		<label class="control-label" for="body">Event Details</label>
+		<textarea data-provide="markdown" class="form-control" id="body" name="body" rows="15" >{{{ Input::old('body') }}}</textarea>
+	</div>
+	<div class="form-group col-sm-3 col-sm-offset-1">
+		<label class="control-label" for="price">Event Price</label>
+		<input type="number" class="form-control" id="price" name="price" rows="15" >{{{ Input::old('price') }}}
 	</div>
 	<div class="form-group col-sm-4 col-sm-offset-1">
 		<label for="tags">Tags</label>
-		<input type="text" class="form-control" id="tags" name="tags" value="foo,bar,baz">
+		<input type="text" class="form-control" id="tags" name="tags" value="">
 	</div>
 	{{-- Image Upload --}}
 	<div class="form-group col-sm-8 col-sm-offset-1">
