@@ -48,8 +48,8 @@ class CalendarEvent extends Model {
 
 	public static function storeTags($tag,$post)
 	{
-		if(CalendarEvent::findTag($tag)->first()){
-			$tags = Tag::where('name', '=' , $tag);
+		if(CalendarEvent::findTag(trim($tag))->first()){
+			$tags = Tag::where('name', '=' , trim($tag));
 			$post->tags()->attach($tags->first()->id);
 		}else{
 			$tags = new Tag();
