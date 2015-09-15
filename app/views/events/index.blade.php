@@ -1,4 +1,20 @@
+<?php
+	require_once("infinite-scroll/connect.php");
+	$results = $connect->query("SELECT * FROM calendar_events ORDER BY updated_at DESC LIMIT 0,5");
+	$count = $connect->query("SELECT * FROM calendar_events");
+	$number = $count->rowCount();
+
+?>
 @extends('layouts.master')
+
+@section('head')
+	<style>
+		.loader{
+
+			bottom: 5px;
+		}
+	</style>
+@stop
 
 @section('content')
 {{-- /vagrant/sites/events.dev/app/views/events/index.blade.php --}}
@@ -15,7 +31,7 @@
 	<div class="row">
 
 		<!-- Article main content -->
-		<article class="col-sm-8 maincontent">
+		<article class="col-sm-8 maincontent calEvents">
 			<header class="page-header">
 				<h1 class="page-title">Upcoming Events</h1>
 			</header>
@@ -33,9 +49,6 @@
 			@empty
 			    <h3>No events found.</h3>
 			@endforelse
-			<ul class="pagination">
-			    <?php echo with(new EventPresenterController($calendarEvents))->render(); ?>
-			</ul>
 
 
 		</article>
@@ -60,5 +73,36 @@
 
 	</div>
 </div>	<!-- /container -->
+<div class="loader row text-center">
+	<img src='images/loader.gif'>
+</div>
+<div class="endOfFile row text-center">
+	<h3 class="endText"></h3>
+</div>
 
+@stop
+
+@section('script')
+	<script>
+		$(document).ready(function(){
+			$('.loader').hide();
+			$('.endOfFile').hide();
+			var load = 0;
+			var number = <?php echo $number;?>;
+			$(window).scroll(function(){
+				if($(window).scrollTop() == $(document).height() - $(window).height()){
+					$('.loader').show();
+					load++;
+					// if(load * 5 > number){
+					// 	$('.endText').text("No more content!");
+					// 	$('.loader').hide();
+					// }else{
+					$.post("infinite-scroll/ajax.php",{load:load}, function(data){
+						$(".calEvents").append(data);
+						$('.loader').hide();
+					});
+				}
+			});
+		});
+	</script>
 @stop

@@ -19,6 +19,7 @@
 
 	
 	<link rel="stylesheet" href="/css/event.css">
+	@yield('head')
 
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -156,6 +157,8 @@
 	<script src="/js/headroom.min.js"></script>
 	<script src="/js/jQuery.headroom.min.js"></script>
 	<script src="/js/template.js"></script>
+	@yield('script')
+
 	<!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52d8f8d75dfc85f4"></script> -->
 </body>
 </html>

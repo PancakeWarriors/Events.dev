@@ -79,7 +79,7 @@
 		    {{-- Check to make sure only author of event sees 'edit' and 'delete' buttons --}}
 		    @if ((Auth::check() && Auth::user()->id == $event->user_id) || Auth::id() == 1) 
 		        <p>
-		            <a class="btn btn-primary" href="{{{ action('eventsController@edit', $event->id) }}}"><span class="glyphicon glyphicon-pencil"></span></a>
+		            <a class="btn btn-primary" href="{{{ action('CalendarEventsController@edit', $event->id) }}}"><span class="glyphicon glyphicon-pencil"></span></a>
 		            <!-- Trigger the modal with a button -->
 		            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-trash"></span></button>
 		        </p>
