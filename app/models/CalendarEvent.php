@@ -12,7 +12,7 @@ class CalendarEvent extends Model {
 	}
 	public function user()
 	{
-	    return $this->belongsToMany('User', 'calendar_event_user');
+	    return $this->belongsToMany('User', 'calendar_event_user')->withTimestamps();
 	}
 
 	public function tags()
