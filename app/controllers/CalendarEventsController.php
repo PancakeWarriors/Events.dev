@@ -16,9 +16,21 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$events = CalendarEvent::with('user')->orderBy('updated_at', 'desc')->paginate(20);
-		$tags = DB::table('tags')->get();
-		return View::make('events.index')->with(['calendarEvents' => $events, 'tags' => $tags]);
+		if(Input::has('t')){
+			$query = CalendarEvent::with('tags');
+			$query->WhereHas('tags', function($q){
+				$tag = Input::get('t');
+				$q->where('name', '=', "$tag");
+			});
+
+			$events = $query->orderBy('updated_at', 'desc')->paginate(20);
+			$tags = DB::table('tags')->get();
+			return View::make('events.index')->with(['calendarEvents'=> $events, 'tags' => $tags]);
+		}else{
+			$events = CalendarEvent::with('user')->orderBy('updated_at', 'desc')->paginate(20);
+			$tags = DB::table('tags')->get();
+			return View::make('events.index')->with(['calendarEvents' => $events, 'tags' => $tags]);
+		}
 
 	}
 
