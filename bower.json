@@ -1,0 +1,21 @@
+{
+  "name": "events_application",
+  "version": "1.00",
+  "homepage": "https://github.com/PancakeWarriors/Events.dev",
+  "authors": [
+    "asteph <alissa.stephens1@gmail.com>"
+  ],
+  "description": "calendar for events.dev",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-calendar": "~0.2.4"
+  }
+}
