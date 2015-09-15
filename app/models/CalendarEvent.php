@@ -12,7 +12,7 @@ class CalendarEvent extends Model {
 	}
 	public function user()
 	{
-	    return $this->belongsTo('User');
+	    return $this->belongsToMany('User', 'calendar_event_user');
 	}
 
 	public function tags()
@@ -46,15 +46,15 @@ class CalendarEvent extends Model {
 		return $query;
 	}
 
-	public static function storeTags($tag,$post)
+	public static function storeTags($tag,$calendarEvent)
 	{
 		if(CalendarEvent::findTag(trim($tag))->first()){
 			$tags = Tag::where('name', '=' , trim($tag));
-			$post->tags()->attach($tags->first()->id);
+			$calendarEvent->tags()->attach($tags->first()->id);
 		}else{
 			$tags = new Tag();
 			$tags->name = $tag;
-			$post->tags()->save($tags);
+			$calendarEvent->tags()->save($tags);
 		}
 	}
 

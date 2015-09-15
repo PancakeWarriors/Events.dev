@@ -61,7 +61,7 @@ class CalendarEventsController extends \BaseController {
 			$calendarEvent->body = Input::get('body');
 			$calendarEvent->price = Input::get('price');
 			$calendarEvent->user_id = Auth::id();
-			$calendarEvent->location_id = Input::get('price');
+			$calendarEvent->location_id = Auth::id();
 			if(!empty(basename($_FILES['image_url']['name'])) && empty($errors)) {
 			    $uploads_directory = 'images/';
 			    $filename = $uploads_directory . basename($_FILES['image_url']['name']);
@@ -93,7 +93,9 @@ class CalendarEventsController extends \BaseController {
 	{
 		if(CalendarEvent::find($id)){		
 			$event = CalendarEvent::find($id);
-			return View::make('events.show')->with('event', $event);
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			$tags = DB::table('tags')->get();
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}else{
 			App::abort(404);
 		}
@@ -110,10 +112,13 @@ class CalendarEventsController extends \BaseController {
 	{
 		$event = CalendarEvent::find($id);
 		if(Auth::check() && Auth::user()->id === $event->user_id){
-			return View::make('events.edit')->with('event', $event);
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			return View::make('events.edit')->with(['event' => $event, 'user' => $user]);
 		}else{
 			Session::flash('errorMessage', 'Can not edit a event that is not yours.');
-			return View::make('events.show')->with('event', $event);
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			$tags = DB::table('tags')->get();
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}
 	}
 
@@ -135,9 +140,10 @@ class CalendarEventsController extends \BaseController {
 			$event->start_dateTime = Input::get('start_dateTime');
 			$event->end_dateTime = Input::get('end_dateTime');
 			$event->description = Input::get('description');
+			$event->body = Input::get('body');
 			$event->price = Input::get('price');
 			$event->user_id = Auth::id();
-			$event->location_id = Input::get('price');
+			$event->location_id = Auth::id();
 			$event->save();
 			$event->tags()->detach();
 			$tags = explode(",", Input::get('tags'));
@@ -169,6 +175,14 @@ class CalendarEventsController extends \BaseController {
 			Session::flash('errorMessage', 'Can not delete a event that is not yours.');
 			return View::make('events.show')->with('event', $event);
 		}
+	}
+
+	public function attending($id)
+	{
+		$event = CalendarEvent::find($id);
+		$user = User::find(Auth::id());
+		$event->user()->attach($user);
+		return Redirect::action('CalendarEventController@index');
 	}
 
 }
