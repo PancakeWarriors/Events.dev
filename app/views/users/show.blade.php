@@ -29,7 +29,7 @@
 					<?php $events = CalendarEvent::with('user')->where('user_id', '=', "$user->id")->get();?>
 					<ul>
 						@foreach($events as $event)
-							<li><a href="{{{ action('CalendarEventsController@showEvent', $event->id) }}}">{{{ $event->title }}}</a></li>
+							<li><a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{ $event->title }}}</a></li>
 						@endforeach
 					</ul>
 				</p>
