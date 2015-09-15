@@ -1,6 +1,6 @@
 <?php
 	require_once("infinite-scroll/connect.php");
-	$results = $connect->query("SELECT * FROM calendar_events ORDER BY updated_at DESC LIMIT 0,5");
+	$results = $connect->query("SELECT * FROM calendar_events ORDER BY updated_at DESC LIMIT 0,20");
 	$count = $connect->query("SELECT * FROM calendar_events");
 	$number = $count->rowCount();
 
@@ -27,6 +27,7 @@
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li class="active">Events</li>
 	</ol>
+	<h3><a class="pull-right" href="/events/create">New Event?</a></h3>
 
 	<div class="row">
 
@@ -40,7 +41,7 @@
 					<h3>
 						<a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{$event->title}}}
 					</h3>
-					<p><img src="http://lorempixel.com/400/400" alt="" class="img-rounded pull-left" width="300" height="200" > {{{ $event->description }}}</p>
+					<p><img src="{{{$event->image_url}}}" alt="" class="img-rounded pull-left" width="300" height="200" > {{{ $event->description }}}</p>
 					<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
 					<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
 
@@ -59,13 +60,11 @@
 
 			<div class="widget">
 				<h4>Categories</h4>
-				<ul class="list-unstyled list-spaces">
-					<li><a href="">Lorem ipsum dolor</a><br><span class="small text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, laborum.</span></li>
-					<li><a href="">Totam, libero, quis</a><br><span class="small text-muted">Suscipit veniam debitis sed ipsam quia magnam eveniet perferendis nisi.</span></li>
-					<li><a href="">Enim, sequi dignissimos</a><br><span class="small text-muted">Reprehenderit illum quod unde quo vero ab inventore alias veritatis.</span></li>
-					<li><a href="">Suscipit, consequatur, aut</a><br><span class="small text-muted">Sed, mollitia earum debitis est itaque esse reiciendis amet cupiditate.</span></li>
-					<li><a href="">Nam, illo, veritatis</a><br><span class="small text-muted">Delectus, sapiente illo provident quo aliquam nihil beatae dignissimos itaque.</span></li>
-				</ul>
+				@forelse($tags as $tag)
+					<a href="?t={{$tag->name}}"><h5>{{{$tag->name}}}</h5></a>
+				@empty
+					<h4>No tags found.</h4>
+				@endforelse
 			</div>
 
 		</aside>
@@ -95,7 +94,7 @@
 				{
 					$('.loader').show();
 					load++;
-					if(load * 5 > number){
+					if(load * 20 > number){
 						$('.endOfFile').show();
 						$('.loader').hide();
 					}else{

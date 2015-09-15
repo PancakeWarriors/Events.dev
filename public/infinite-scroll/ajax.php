@@ -1,7 +1,7 @@
 <?php
 	require_once('connect.php');
-	$load = htmlentities(strip_tags($_POST['load'])) * 5;
-	$query = $connect->query("SELECT * FROM calendar_events ORDER BY updated_at DESC LIMIT ".$load.",5");
+	$load = htmlentities(strip_tags($_POST['load'])) * 20;
+	$query = $connect->query("SELECT * FROM calendar_events ORDER BY updated_at DESC LIMIT ".$load.",20");
 	
 	while($row = $query->fetch())
 	{
