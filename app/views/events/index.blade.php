@@ -77,7 +77,7 @@
 	<img src='images/loader.gif'>
 </div>
 <div class="endOfFile row text-center">
-	<h3 class="endText"></h3>
+	<h3>No more content!</h3>
 </div>
 
 @stop
@@ -89,18 +89,21 @@
 			$('.endOfFile').hide();
 			var load = 0;
 			var number = <?php echo $number;?>;
-			$(window).scroll(function(){
-				if($(window).scrollTop() == $(document).height() - $(window).height()){
+			$(window).scroll(function()
+			{
+				if($(window).scrollTop() == $(document).height() - $(window).height())
+				{
 					$('.loader').show();
 					load++;
-					// if(load * 5 > number){
-					// 	$('.endText').text("No more content!");
-					// 	$('.loader').hide();
-					// }else{
-					$.post("infinite-scroll/ajax.php",{load:load}, function(data){
-						$(".calEvents").append(data);
+					if(load * 5 > number){
+						$('.endOfFile').show();
 						$('.loader').hide();
-					});
+					}else{
+						$.post("infinite-scroll/ajax.php",{load:load}, function(data){
+							$(".calEvents").append(data);
+							$('.loader').hide();
+						});
+					};
 				}
 			});
 		});
