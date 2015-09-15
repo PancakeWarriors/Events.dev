@@ -32,7 +32,7 @@
 <body class="home">
 	<!-- Fixed navbar -->
 
-	{{-- {{ Request::url() }} --}}
+	{{-- {{ Request::segment(2) }} --}}
 
 	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
 		<div class="container">
@@ -46,11 +46,11 @@
 					<li {{ Request::is('/')? 'class="active"': '' }}><a href="/">Home</a></li>
 					<li {{ Request::is('events')? 'class="active"': '' }}><a href="{{{ action('CalendarEventsController@index') }}}">Events</a></li>
 					@if (Auth::check()) 
-						<li {{ Request::is('show')||Request::is('calendar')? 'class="active"': '' }} class="dropdown">
+						<li {{ (Request::segment(1) == 'users')? 'class="active"': '' }} class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li {{ Request::is('show')? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
-								<li {{ Request::is('calendar')? 'class="active"': '' }}><a href="">Calendar</a></li>
+								<li {{ !Request::segment(3)? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
+								<li {{ (Request::segment(3) == 'calendar')? 'class="active"': '' }}><a href="{{{ action('UsersController@showCalendar', $user->id) }}}">Calendar</a></li>
 							</ul>
 						</li>
 						<li><a href="{{{ action('UsersController@doLogout') }}}">Logout</a></li>
