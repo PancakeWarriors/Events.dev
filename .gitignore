@@ -5,3 +5,5 @@ composer.phar
 .env.php
 .DS_Store
 Thumbs.db
+public/infinite-scroll/ajax.php
+public/infinite-scroll/connect.php
