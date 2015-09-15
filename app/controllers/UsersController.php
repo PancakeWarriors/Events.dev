@@ -59,7 +59,7 @@ class UsersController extends \BaseController {
 			$email = Input::get('email');
 			$password = Input::get('password');
 			Auth::attempt(array('email' => $email, 'password' => $password));
-			return Redirect::action('CalendarEventsController@index');
+			return Redirect::action('UsersController@showUser');
 		}
 	}
 

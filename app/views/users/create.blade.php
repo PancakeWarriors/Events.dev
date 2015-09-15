@@ -9,8 +9,8 @@
 
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-		<li class="active">User access</li>
-		<li></li>
+		<li><a href="{{{ action('UsersController@showLogin')}}}">User access</a></li>
+		<li class="active">New user</li>
 	</ol>
 
 	<div class="row">
@@ -18,7 +18,7 @@
 		<!-- Article main content -->
 		<article class="col-xs-12 maincontent">
 			<header class="page-header">
-				<h1 class="page-title">Sign in</h1>
+				<h1 class="page-title">Sign Up</h1>
 			</header>
 			@if (Session::has('errorMessage'))
 			    <div class="alert alert-danger">{{{ Session::get('errorMessage') }}}</div>
@@ -26,11 +26,10 @@
 			<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">
-						<h3 class="thin text-center">Sign in to your account</h3>
-						<p class="text-center text-muted">Don't have an account? <a href="signup">Signup</a> to create events or add them to your calendar. </p>
+						<h3 class="thin text-center">Create a free account</h3>
 						<hr>
 
-						{{ Form::open(array('action' => 'UsersController@doLogin')) }}
+						{{ Form::open(array('action' => 'UsersController@newUser')) }}
 							<div class="top-margin">
 								<label for="email">Email <span class="text-danger">*</span></label>
 								<input type="email" class="form-control" id="email" name="email" value="{{{ Input::old('email') }}}">
@@ -39,15 +38,25 @@
 								<label for="password">Password <span class="text-danger">*</span></label>
 								<input type="password" class="form-control" id="password" name="password" value="{{{ Input::old('password') }}}">
 							</div>
+							<div class="top-margin">
+								<label for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
+								<input type="confirm_password" class="form-control" id="confirm_password" name="confirm_password" value="{{{ Input::old('confirm_password') }}}">
+							</div>
+							<div class="top-margin">
+								<label for="first_name">First name <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="first_name" name="first_name" value="{{{ Input::old('first_name') }}}">
+							</div>
+							<div class="top-margin">
+								<label for="last_name">Last name <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="last_name" name="last_name" value="{{{ Input::old('last_name') }}}">
+							</div>
+
 
 							<hr>
 
 							<div class="row">
-								<div class="col-lg-8">
-									<b><a href="">Forgot password?</a></b>
-								</div>
 								<div class="col-lg-4 text-right">
-									<button class="btn btn-action" type="submit">Sign in</button>
+									<button class="btn btn-action" type="submit">Sign up</button>
 								</div>
 							</div>
 						{{ Form::close() }}
