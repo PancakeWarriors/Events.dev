@@ -13,6 +13,21 @@
 		<li class="active">New user</li>
 	</ol>
 
+	{{-- show errors in alert box --}}
+	@if (Session::has('errorMessage'))
+	    <div class="alert alert-danger">{{{ Session::get('errorMessage') }}}</div>
+	@endif
+	@if($errors->has())
+
+		<div class="alert alert-danger" role="alert">
+			<ul>
+				@foreach($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+
 	<div class="row">
 
 		<!-- Article main content -->
@@ -36,11 +51,11 @@
 							</div>
 							<div class="top-margin">
 								<label for="password">Password <span class="text-danger">*</span></label>
-								<input type="password" class="form-control" id="password" name="password" value="{{{ Input::old('password') }}}">
+								<input type="password" class="form-control" id="password" name="password">
 							</div>
 							<div class="top-margin">
 								<label for="confirm_password">Confirm Password <span class="text-danger">*</span></label>
-								<input type="confirm_password" class="form-control" id="confirm_password" name="confirm_password" value="{{{ Input::old('confirm_password') }}}">
+								<input type="password" class="form-control" id="confirm_password" name="password_confirmation">
 							</div>
 							<div class="top-margin">
 								<label for="first_name">First name <span class="text-danger">*</span></label>

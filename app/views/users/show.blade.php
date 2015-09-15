@@ -12,15 +12,15 @@
 	</ol>
 
 	<div class="row">
-
+		{{-- show message --}}
+		@if (Session::has('message'))
+		    <div class="alert alert-success">{{{ Session::get('message') }}}</div>
+		@endif
 		<!-- Profile main content -->
 		<article class="col-xs-12 maincontent">
 			<header class="page-header">
 				<h1 class="page-title">{{ $user->first_name }} {{ $user->last_name }}</h1>
 			</header>
-			@if (Session::has('errorMessage'))
-			    <div class="alert alert-danger">{{{ Session::get('errorMessage') }}}</div>
-			@endif
 			<div class="">
 				<p><strong>User since: </strong>{{ $user->created_at }}</p>
 				<p><strong>Contact: </strong>{{ $user->email }}</p>
@@ -29,9 +29,7 @@
 					<?php $events = CalendarEvent::with('user')->where('user_id', '=', "$user->id")->get();?>
 					<ul>
 						@foreach($events as $event)
-						{{-- ADD ONCE showEvent is made
-						{{{ action('CalendarEventsController@showEvent', $event->id) }}} --}}
-							<li><a href="#">{{{ $event->title }}}</a></li>
+							<li><a href="{{{ action('CalendarEventsController@showEvent', $event->id) }}}">{{{ $event->title }}}</a></li>
 						@endforeach
 					</ul>
 				</p>
