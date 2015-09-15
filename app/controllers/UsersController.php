@@ -40,28 +40,53 @@ class UsersController extends \BaseController {
 			return Redirect::action('CalendarEventsController@index');
 		}
 	}
+	// FOR ELOQUENT
+	// public function newUser()
+	// {
+	// 	$validator = Validator::make(Input::all(), User::$rules);
+	// 	if($validator->fails()){
+	// 		Session::flash('errorMessage', 'Something went wrong, refer to the red text below:');
+	// 		Log::info('validator failed', Input::all());
+	// 		return Redirect::back()->withInput()->withErrors($validator);
+	// 	}else{	
+	// 		$user = new User();
+	// 		$user->email = Input::get('email');
+	// 		$user->password = Input::get('password');
+	// 		$user->first_name = Input::get('first_name');
+	// 		$user->last_name = Input::get('last_name');
+	// 		$user->save();
 
+	// 		$email = Input::get('email');
+	// 		$password = Input::get('password');
+	// 		Auth::attempt(array('email' => $email, 'password' => $password));
+	// 		return Redirect::action('UsersController@showUser');
+	// 	}
+
+	// FOR ESENSI
 	public function newUser()
 	{
-		$validator = Validator::make(Input::all(), User::$rules);
-		if($validator->fails()){
-			Session::flash('errorMessage', 'Something went wrong, refer to the red text below:');
-			Log::info('validator failed', Input::all());
-			return Redirect::back()->withInput()->withErrors($validator);
-		}else{	
-			$user = new User();
-			$user->email = Input::get('email');
-			$user->password = Input::get('password');
-			$user->first_name = Input::get('first_name');
-			$user->last_name = Input::get('last_name');
-			$user->save();
+		$user = new User();
 
+		// populate the model with the form data
+		$user->email = Input::get('email');
+		$user->password = Input::get('password');
+		$user->first_name = Input::get('first_name');
+		$user->last_name = Input::get('last_name');
+
+		if (!$user->save()) {
+		     $errors = $user->getErrors();
+		     return Redirect::action('UsersController@showCreate')
+		       ->with('errors', $errors)
+		       ->withInput();
+		}
+
+		   // success!
 			$email = Input::get('email');
 			$password = Input::get('password');
 			Auth::attempt(array('email' => $email, 'password' => $password));
-			return Redirect::action('UsersController@showUser');
-		}
-	}
+		    return Redirect::action('UsersController@showUser', Auth::id())->with('message', 'Account with email of ' . $user->email . ' has been created!');
+		
+	 }
 
 	public function showUser($id)
 	{
@@ -95,22 +120,28 @@ class UsersController extends \BaseController {
 
 	public function editProfile()
 	{
-		$validator = Validator::make(Input::all(), User::$rules2);
-		if($validator->fails()){
-			return Redirect::back()->withInput()->withErrors($validator);
+		//check if they used correct current password before allowing edits
+		if (Hash::check(Input::get('current_password'), Auth::user()->password))
+		{
+			$user = User::find(Auth::user()->id);
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->email = Input::get('email');
+			$user->password = Input::get('password');
+
+			if (!$user->save()) {
+			     $errors = $user->getErrors();
+			     return Redirect::action('UsersController@edit', Auth::id())->with('errors', $errors)->withInput();
+			}
+
+		    // success!
+			$email = Input::get('email');
+			$password = Input::get('password');
+			Auth::attempt(array('email' => $email, 'password' => $password));
+		    return Redirect::action('UsersController@showUser', Auth::id())->with('message', 'Account with email of ' . $user->email . ' has been succesfully edited!');
 		}else{
-			$profile = User::find(Auth::user()->id);
-			$profile->first_name = Input::get('first_name');
-			$profile->last_name = Input::get('last_name');
-			if(!empty(Input::has('email'))){
-				$profile->email = Input::get('email');
-			}
-			if (Hash::check(Input::get('current_password'), Auth::user()->password)){
-				$profile->password = Input::get('password');
-			}
-			$profile->save();
-			Session::flash('successMessage', 'Profile Updated!');
-			return Redirect::action('CalendarEventsController@index');
+			// current password didn't match database
+			return Redirect::action('UsersController@edit', Auth::id())->with('errorMessage', 'Current password was incorrect.');
 		}
 	}
 }
