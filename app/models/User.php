@@ -20,7 +20,7 @@ class User extends Model implements UserInterface, RemindableInterface {
 
 	public function calendarEvents()
 	{
-	    return $this->belongsToMany('CalendarEvent', 'calendar_event_user');
+	    return $this->belongsToMany('CalendarEvent', 'calendar_event_user')->withTimestamps();
 	}
 
 	protected $fillable = ['first_name', 'last_name', 'email', 'password'];

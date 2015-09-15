@@ -1,3 +1,20 @@
+<?php
+$out = array();
+//grab all the events the user is going to and put in correct format
+ foreach($user->calendar_events as $event){ 
+    $out[] = array(
+        'id' => $event->id,
+        'title' => $event->title,
+        'url' => "http://events.dev/events/" . $event->id,
+        'class' => 'event-important',
+        'start' => strtotime($event->start_dateTime).'000',
+        'end' => strtotime($event->end_dateTime).'000'
+    );
+}
+
+echo json_encode(array('success' => 1, 'result' => $out));
+exit;
+?>
 @extends('layouts.master')
 @section('head')
 	<link rel="stylesheet" href="/vendor/bootstrap-calendar/css/calendar.css">
@@ -12,6 +29,8 @@
 			<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 			<li class="active">User Profile</li>
 		</ol>
+
+		{{ $user->calendar_events[0]->title }}
 
 		<div class="row">
 			{{-- show message --}}
