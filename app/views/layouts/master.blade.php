@@ -50,7 +50,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li {{ !Request::segment(3)? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
-								<li {{ (Request::segment(3) == 'calendar')? 'class="active"': '' }}><a href="{{{ action('UsersController@showCalendar', $user->id) }}}">Calendar</a></li>
+								<li {{ (Request::segment(3) == 'calendar')? 'class="active"': '' }}><a href="{{{ action('UsersController@showCalendar', Auth::id()) }}}">Calendar</a></li>
 							</ul>
 						</li>
 						<li><a href="{{{ action('UsersController@doLogout') }}}">Logout</a></li>
