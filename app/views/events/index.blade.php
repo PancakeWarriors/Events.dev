@@ -102,9 +102,11 @@
 							$(".calEvents").append(data);
 							$('.loader').hide();
 						});
-					};
+					}
 				}
 			});
 		});
+
+		
 	</script>
 @stop

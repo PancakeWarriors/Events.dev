@@ -58,5 +58,17 @@ class CalendarEvent extends Model {
 		}
 	}
 
+	public static function checkAttendance($eventId)
+	{
+		$attendingUsers = DB::select('SELECT * FROM calendar_event_user WHERE calendar_event_id = ?', array($eventId));
+		foreach ($attendingUsers as $user) {
+			if($user->user_id == Auth::id()){
+				return true;
+			}
+		}
+		return false;
+
+	}
+
 
 }
