@@ -67,12 +67,13 @@
 		    <p>{{{ $event->body}}}</p>
 		    <hr>
 			<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
-			<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
+			<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
+			<h5>Price: ${{{$event->price}}}</h5>
 			<div>
 				@if(!CalendarEvent::checkAttendance($event->id))
 		            {{ Form::open(array('action' => array('CalendarEventsController@attending', $event->id), 'style'=>'display:inline'))}}
 						<input type="submit" class="btn btn-info" value="Would you like to attend?">
-					{{ Form::close() }}
+					{{ Form::close() }}<hr>
 				@else
 		            {{ Form::open(array('action' => array('CalendarEventsController@cancelAttending', $event->id), 'style'=>'display:inline', 'method' => 'DELETE'))}}
 						<input type="submit" class="btn btn-danger" value="Attending! Cancel attendance?">

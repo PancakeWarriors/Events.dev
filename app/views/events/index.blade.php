@@ -41,7 +41,7 @@
 					<h3>
 						<a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{$event->title}}}
 					</h3>
-					<p><img src="{{{$event->image_url}}}" alt="" class="img-rounded pull-left" width="300" height="200" > {{{ $event->description }}}</p>
+					<p><img src="/{{{$event->image_url}}}" alt="" class="img-rounded pull-left" width="300" height="200" > {{{ $event->description }}}</p>
 					<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
 					<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
 

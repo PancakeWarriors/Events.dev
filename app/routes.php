@@ -39,6 +39,7 @@ Route::post('users/{id}/edit', 'UsersController@editProfile');
 
 // EVENTS
 Route::post('/events/{id}', 'CalendarEventsController@attending');
-Route::delete('/events/{id}', 'CalendarEventsController@cancelAttending');
+
+Route::delete('/events/{id}/attending', 'CalendarEventsController@cancelAttending');
 
 Route::resource('/events', 'CalendarEventsController');
