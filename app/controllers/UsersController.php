@@ -37,7 +37,7 @@ class UsersController extends \BaseController {
 		if(!Auth::check()){
 			return View::make('users.create');
 		}else{
-			return Redirect::action('CalendarEventsController@index');
+			return Redirect::action('UsersController@showUser', Auth::id());
 		}
 	}
 	// FOR ELOQUENT

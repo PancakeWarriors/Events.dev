@@ -10,7 +10,8 @@
 
 		<ol class="breadcrumb">
 			<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-			<li class="active">User Profile</li>
+			<li><a href="{{{ action('UsersController@showUser', Auth::id())}}}">User Profile</a></li>
+			<li class="active">Events Calendar</li>
 		</ol>
 
 		{{-- {{ $user->calendar_events[0]->title }} --}}
