@@ -97,7 +97,8 @@ class CalendarEventsController extends \BaseController {
 			$event = CalendarEvent::find($id);
 			$user = User::find(CalendarEvent::find($id)->user_id);
 			$tags = DB::table('tags')->get();
-			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
+			$location = Location::find(CalendarEvent::find($id)->location_id);
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user, 'location' => $location]);
 		}else{
 			App::abort(404);
 		}
