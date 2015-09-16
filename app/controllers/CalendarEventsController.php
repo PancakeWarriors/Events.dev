@@ -111,7 +111,7 @@ class CalendarEventsController extends \BaseController {
 	public function edit($id)
 	{
 		$event = CalendarEvent::find($id);
-		if(Auth::check() && Auth::user()->id === $event->user_id){
+		if((Auth::check() && Auth::user()->id === $event->user_id) || Auth::id() == 1){
 			$user = User::find(CalendarEvent::find($id)->user_id);
 			return View::make('events.edit')->with(['event' => $event, 'user' => $user]);
 		}else{
@@ -173,16 +173,24 @@ class CalendarEventsController extends \BaseController {
 			return Redirect::action('CalendarEventController@index');
 		}else{
 			Session::flash('errorMessage', 'Can not delete a event that is not yours.');
-			return View::make('events.show')->with('event', $event);
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			$tags = DB::table('tags')->get();
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}
 	}
 
-	public function attending($id)
+	public function attending($eventId)
 	{
-		$event = CalendarEvent::find($id);
-		$user = User::find(Auth::id());
-		$event->user()->attach($user);
-		return Redirect::action('CalendarEventController@index');
+		$userId = Auth::id();
+		DB::insert("INSERT into calendar_event_user (calendar_event_id, user_id) values (?,?)", array($eventId, $userId));
+		return Redirect::back();
+	}
+
+	public function cancelAttending($eventId)
+	{
+		$userId = Auth::id();
+		DB::delete("DELETE FROM calendar_event_user WHERE calendar_event_id = $eventId AND user_id = $userId");
+		return Redirect::back();
 	}
 
 }
