@@ -55,8 +55,8 @@ class CalendarEventsController extends \BaseController {
 	{
 			$calendarEvent = new CalendarEvent();
 			$calendarEvent->title = Input::get('title');
-			$calendarEvent->start_dateTime = Input::get('start_date')." ".Input::get('start_time');
-			$calendarEvent->end_dateTime = Input::get('end_date')." ".Input::get('end_time');
+			$calendarEvent->start_dateTime = Input::get('start_dateTime');
+			$calendarEvent->end_dateTime = Input::get('end_dateTime');
 			$calendarEvent->description = Input::get('description');
 			$calendarEvent->body = Input::get('body');
 			$calendarEvent->price = Input::get('price');
@@ -168,9 +168,9 @@ class CalendarEventsController extends \BaseController {
         if (Request::wantsJson()) {
         	$event->delete();
             return Response::json(array(/* ... */));
-        } elseif(Auth::check() && Auth::user()->id === $event->user_id){
+        } elseif(Auth::check() && Auth::user()->id === $event->user_id || Auth::id() == 1){
 			$event->delete();
-			return Redirect::action('CalendarEventController@index');
+			return Redirect::action('CalendarEventsController@index');
 		}else{
 			Session::flash('errorMessage', 'Can not delete a event that is not yours.');
 			$user = User::find(CalendarEvent::find($id)->user_id);
