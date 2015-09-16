@@ -1,21 +1,3 @@
-
-<?php
-// $out = array();
-// //grab all the events the user is going to and put in correct format
-//  foreach($user->calendar_events as $event){ 
-//     $out[] = array(
-//         'id' => $event->id,
-//         'title' => $event->title,
-//         'url' => "http://events.dev/events/" . $event->id,
-//         'class' => 'event-important',
-//         'start' => time().'000',
-//         'end' => time() . '999'
-//     );
-// }
-
-// echo json_encode(array('success' => 1, 'result' => $out));
-// exit;
-?>
 @extends('layouts.master')
 @section('head')
 	<link rel="stylesheet" href="/vendor/bootstrap-calendar/css/calendar.css">
@@ -31,7 +13,7 @@
 			<li class="active">User Profile</li>
 		</ol>
 
-		{{ $user->calendar_events[0]->title }}
+		{{-- {{ $user->calendar_events[0]->title }} --}}
 
 		<div class="row">
 			{{-- show message --}}
@@ -73,13 +55,20 @@
 <!--    <script type="text/javascript" src="/vendor/bootstrap-calendar/js/app.js"></script> -->
     <script type="text/javascript">
         "use strict";
+        var today = new Date();
+		var year = today.getFullYear();
+		var month = '0' + (today.getMonth()+1);
+		var day = today.getDate();
+
+		var todayFormated = year + '-' + month + '-' + day;
+		console.log(todayFormated);
 
         var options = {
-        	events_source: '../../events.json.php',
+        	events_source: '../../../user/calendarjson',
         	view: 'month',
         	tmpl_path: '/vendor/bootstrap-calendar/tmpls/',
         	tmpl_cache: false,
-        	day: '2013-03-12',
+        	day: todayFormated,
         	onAfterEventsLoad: function(events) {
         		if(!events) {
         			return;
