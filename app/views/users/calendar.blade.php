@@ -1,19 +1,20 @@
-<?php
-$out = array();
-//grab all the events the user is going to and put in correct format
- foreach($user->calendar_events as $event){ 
-    $out[] = array(
-        'id' => $event->id,
-        'title' => $event->title,
-        'url' => "http://events.dev/events/" . $event->id,
-        'class' => 'event-important',
-        'start' => strtotime($event->start_dateTime).'000',
-        'end' => strtotime($event->end_dateTime).'000'
-    );
-}
 
-echo json_encode(array('success' => 1, 'result' => $out));
-exit;
+<?php
+// $out = array();
+// //grab all the events the user is going to and put in correct format
+//  foreach($user->calendar_events as $event){ 
+//     $out[] = array(
+//         'id' => $event->id,
+//         'title' => $event->title,
+//         'url' => "http://events.dev/events/" . $event->id,
+//         'class' => 'event-important',
+//         'start' => time().'000',
+//         'end' => time() . '999'
+//     );
+// }
+
+// echo json_encode(array('success' => 1, 'result' => $out));
+// exit;
 ?>
 @extends('layouts.master')
 @section('head')
@@ -73,7 +74,7 @@ exit;
         "use strict";
 
         var options = {
-        	events_source: 'events.json.php',
+        	events_source: '../../events.json.php',
         	view: 'month',
         	tmpl_path: '/vendor/bootstrap-calendar/tmpls/',
         	tmpl_cache: false,
