@@ -72,12 +72,12 @@
 			<div>
 				@if(!CalendarEvent::checkAttendance($event->id))
 		            {{ Form::open(array('action' => array('CalendarEventsController@attending', $event->id), 'style'=>'display:inline'))}}
-						<input type="submit" class="btn btn-info" value="Would you like to attend?">
+						<input type="submit" class="btn btn-default" value="Would you like to attend?">
 					{{ Form::close() }}<hr>
 				@else
 		            {{ Form::open(array('action' => array('CalendarEventsController@cancelAttending', $event->id), 'style'=>'display:inline', 'method' => 'DELETE'))}}
-						<input type="submit" class="btn btn-danger" value="Attending! Cancel attendance?">
-					{{ Form::close() }}
+						<input type="submit" class="btn btn-default" value="Attending! Cancel attendance?">
+					{{ Form::close() }}<hr>
 				@endif
 			</div>
 
@@ -92,7 +92,7 @@
 		    {{-- Check to make sure only author of event sees 'edit' and 'delete' buttons --}}
 		    @if ((Auth::check() && Auth::user()->id == $event->user_id) || Auth::id() == 1) 
 		        <p>
-		            <a class="btn btn-primary" href="{{{ action('CalendarEventsController@edit', $event->id) }}}"><span class="glyphicon glyphicon-pencil"></span></a>
+		            <a class="btn btn-info" href="{{{ action('CalendarEventsController@edit', $event->id) }}}"><span class="glyphicon glyphicon-pencil"></span></a>
 		            <!-- Trigger the modal with a button -->
 		            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#editModal"><span class="glyphicon glyphicon-trash"></span></button>
 		        </p>

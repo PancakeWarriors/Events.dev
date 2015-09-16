@@ -75,10 +75,9 @@ class CalendarEventsController extends \BaseController {
 				$calendarEvent->image_url = 'images/image.jpeg';   
 			}
 			$calendarEvent->save();
-			$tags = explode(",", Input::get('tags'));
-			foreach ($tags as $tag) {
-				calendarEvent::storeTags($tag,$calendarEvent);
-			}
+
+			$calendarEvent->tag_list = Input::get('tags');
+
 			return Redirect::action('CalendarEventsController@index');
 	}
 
@@ -136,6 +135,7 @@ class CalendarEventsController extends \BaseController {
 			return Redirect::back()->withInput()->withErrors($validator);
 		}else{
 			$event = CalendarEvent::find($id);
+			$event->id = $id;
 			$event->title = Input::get('title');
 			$event->start_dateTime = Input::get('start_dateTime');
 			$event->end_dateTime = Input::get('end_dateTime');
@@ -145,10 +145,9 @@ class CalendarEventsController extends \BaseController {
 			$event->user_id = Auth::id();
 			$event->location_id = Auth::id();
 			$event->save();
-			$event->tags()->detach();
 			$tags = explode(",", Input::get('tags'));
 			foreach ($tags as $tag) {
-				CalendarEvent::storeTags($tag,$event);
+				CalendarEvent::storeTags($tag,$id);
 			}
 			return Redirect::action('CalendarEventController@show', array($id));
 		}

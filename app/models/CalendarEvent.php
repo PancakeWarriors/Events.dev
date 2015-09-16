@@ -46,15 +46,32 @@ class CalendarEvent extends Model {
 		return $query;
 	}
 
-	public static function storeTags($tag,$calendarEvent)
+	public function setTagListAttribute($value)
+	{
+		$tags = explode(',', $value);
+
+		$tagIds = array();
+
+		foreach ($tags as $tagName) {
+			$tag = Tag::firstOrCreate(array('name' => $tagName));
+
+			$tagIds[] = $tag->id;
+		}
+
+		$this->tags()->sync($tagIds);
+	}
+
+	public static function storeTags($tag,$calendarEventId)
 	{
 		if(CalendarEvent::findTag(trim($tag))->first()){
-			$tags = Tag::where('name', '=' , trim($tag));
-			$calendarEvent->tags()->attach($tags->first()->id);
+			$tagId = Tag::where('name', '=' , trim($tag))->first()['id'];
+			DB::insert("INSERT into calendar_event_tag (calendar_event_id, tag_id) values (?,?)", array($calendarEventId, $tagId));
 		}else{
 			$tags = new Tag();
 			$tags->name = $tag;
-			$calendarEvent->tags()->save($tags);
+			$tags->save();
+			$tagId = DB::getPdo()->lastInsertId();
+			DB::insert("INSERT into calendar_event_tag (calendar_event_id, tag_id) values (?,?)", array($calendarEventId, $tagId));
 		}
 	}
 

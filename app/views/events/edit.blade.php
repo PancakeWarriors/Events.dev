@@ -14,6 +14,7 @@
 		}
 
 	</style>
+	<link rel="stylesheet" type="text/css" href="/css/datetimepicker.css">
 @stop
 
 @section('content')
@@ -53,20 +54,19 @@
 			<input type="text" class="form-control" id="title" name="title" value="{{{ $event->title }}}">
 		</div>
 		<div class="form-group col-sm-8">
-			<label class="control-label" for="start_dateTime">Start date</label>
-			<input type="date" class="form-control" id="start_date" name="start_date" value="{{{ $event->start_date }}}">
+			{{ Form::label('start_dateTime', 'Start Date Time', ['class' => 'control-label']) }}
+			{{ Form::button('', ['class' => 'glyphicon glyphicon-calendar', 'id' => 'start_dateTime', 'value' => "$event->start_dateTime"]) }}
+			<fieldset disabled>
+				{{ Form::text('title', null, ['class' => 'form-control' , 'id' => 'start_display']) }}
+			</fieldset>
 		</div>
+
 		<div class="form-group col-sm-8">
-			<label class="control-label" for="start_dateTime">Start time (hh:mm:AM/PM)</label>
-			<input type="time" class="form-control" id="start_time" name="start_time" value="{{{ $event->start_time }}}">
-		</div>
-		<div class="form-group col-sm-8">
-			<label class="control-label" for="end_dateTime">End date</label>
-			<input type="date" class="form-control" id="end_date" name="end_date" value="{{{ $event->end_date }}}">
-		</div>
-		<div class="form-group col-sm-8">
-			<label class="control-label" for="end_dateTime">End time (hh:mm:AM/PM)</label>
-			<input type="time" class="form-control" id="end_time" name="end_time" value="{{{ $event->end_time }}}">
+			{{ Form::label('end_dateTime', 'End Date Time', ['class' => 'control-label']) }}
+			{{ Form::button('', ['class' => 'glyphicon glyphicon-calendar', 'id' => 'end_dateTime', 'value' => "$event->end_dateTime"]) }}
+			<fieldset disabled>
+				{{ Form::text('title', null, ['class' => 'form-control' , 'id' => 'end_display']) }}
+			</fieldset>
 		</div>
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="description">Event Description</label>
@@ -78,7 +78,10 @@
 		</div>
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="price">Event Price</label>
-			<input type="number" class="form-control" id="price" name="price" rows="15" value="{{{ $event->price }}}">
+			<div class="input-group">
+				<div class="input-group-addon">$</div>
+				<input type="number" class="form-control" id="price" name="price" rows="15" value="{{{ $event->price }}}">
+			</div>
 		</div>
 		<div class="form-group col-sm-8">
 			<label for="tags">Tags</label>
@@ -104,4 +107,26 @@
 	{{-- close row --}}
 	</div>
 </div>
+@stop
+
+@section('script')
+	<script src="/js/datetimepicker.js"></script>
+	<script>
+		jQuery('#start_dateTime').datetimepicker();
+		jQuery('#end_dateTime').datetimepicker();
+
+		//MAKE BUTTON VAL = TEXT VAL
+		$( document ).ready(function() {
+			$('#start_display').val($('#start_dateTime').val());
+			$('#end_display').val($('#end_dateTime').val());
+		});
+
+		$('#start_dateTime').change(function() {
+		    $('#start_display').val($(this).val());
+		});
+
+		$('#end_dateTime').change(function() {
+		    $('#end_display').val($(this).val());
+		});
+	</script>
 @stop
