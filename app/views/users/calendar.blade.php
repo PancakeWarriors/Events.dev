@@ -48,13 +48,14 @@
 							<button class="btn btn-primary" data-calendar-nav="next">Next ></button>
 						</div>
 						<div class="btn-group btn-group-sm">
-							<button class="btn btn-warning" data-calendar-view="year">Year</button>
-							<button class="btn btn-warning active" data-calendar-view="month">Month</button>
-							<button class="btn btn-warning" data-calendar-view="week">Week</button>
-							<button class="btn btn-warning" data-calendar-view="day">Day</button>
+							<button class="btn btn-default" data-calendar-view="year">Year</button>
+							<button class="btn btn-default active" data-calendar-view="month">Month</button>
+							<button class="btn btn-default" data-calendar-view="week">Week</button>
+							<button class="btn btn-default" data-calendar-view="day">Day</button>
 						</div>
 					</div>
-					<h1 class="page-title">{{ $user->first_name }} {{ $user->last_name }}</h1>
+					{{-- header that changes according to the date/day --}}
+					<h3></h3>
 				
 				</header>	
 

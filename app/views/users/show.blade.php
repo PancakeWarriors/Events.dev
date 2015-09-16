@@ -33,7 +33,14 @@
 						@endforeach
 					</ul>
 				</p>
-				<p><strong>Attending Events: </strong></p>
+				<p>
+					<strong>Attending Events: </strong>
+					<ul>
+						@foreach($user->calendar_events as $event)
+							<li><a href="{{{ action('CalendarEventsController@show', $event->id) }}}">{{{ $event->title }}}</a></li>
+						@endforeach
+					</ul>
+				</p>
 				<hr>
 				@if (Auth::id() == $user->id) 
 					<a class="btn btn-default" href="{{{ action('UsersController@edit', $user->id) }}}">Edit Profile</a><a class="btn btn-action" style="margin-left: 2px" href="{{{ action('UsersController@showCalendar', $user->id) }}}">View Calendar</a>
