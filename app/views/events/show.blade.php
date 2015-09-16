@@ -50,7 +50,7 @@
 		            <p>Are you sure you want to delete the event titled {{{$event->title}}}?</p>
 		          </div>
 		          <div class="modal-footer">
-		            {{ Form::open(array('action' => array('CalendarEventsController@destroy', $event->id, 'style'=>'display:inline;'), 'method' => 'DELETE')) }}
+		            {{ Form::open(array('action' => array('CalendarEventsController@destroy', $event->id), 'style'=>'display:inline', 'method' => 'DELETE')) }}
 		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		                <button class="btn btn-danger" >Delete</button>
 		            {{ Form::close() }}
@@ -69,9 +69,15 @@
 			<h5>From: {{{date_create($event->start_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5>
 			<h5>To: {{{date_create($event->end_dateTime)->format('l, F jS Y @ h:i:s a')}}}</h5></a>
 			<div>
-	            {{ Form::open(array('action' => array('CalendarEventsController@attending', $event->id, 'style'=>'display:inline;')))}}
-					<button type="button" class="btn btn-default">Attending</button>
-				{{ Form::close() }}
+				@if(!CalendarEvent::checkAttendance($event->id))
+		            {{ Form::open(array('action' => array('CalendarEventsController@attending', $event->id), 'style'=>'display:inline'))}}
+						<input type="submit" class="btn btn-info" value="Would you like to attend?">
+					{{ Form::close() }}
+				@else
+		            {{ Form::open(array('action' => array('CalendarEventsController@cancelAttending', $event->id), 'style'=>'display:inline', 'method' => 'DELETE'))}}
+						<input type="submit" class="btn btn-danger" value="Attending! Cancel attendance?">
+					{{ Form::close() }}
+				@endif
 			</div>
 
 		    {{-- tag stuff --}}
