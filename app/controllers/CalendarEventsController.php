@@ -75,9 +75,11 @@ class CalendarEventsController extends \BaseController {
 				$calendarEvent->image_url = 'images/image.jpeg';   
 			}
 			$calendarEvent->save();
-			$tags = explode(",", Input::get('tags'));
-			foreach ($tags as $tag) {
-				calendarEvent::storeTags($tag,$calendarEvent);
+			if(Input::get('tags')){
+				$tags = explode(",", Input::get('tags'));
+				foreach ($tags as $tag) {
+					calendarEvent::storeTags($tag,$calendarEvent);
+				}
 			}
 			return Redirect::action('CalendarEventsController@index');
 	}
