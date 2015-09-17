@@ -40,23 +40,40 @@ class CalendarEvent extends Model {
 		// }
 	}
 
-	public static function findTag($tag)
+	// public static function findTag($tag)
+	// {
+	// 	$query = Tag::where('name', '=', $tag)->get();	
+	// 	return $query;
+	// }
+
+	public function setTagListAttribute($value)
 	{
-		$query = Tag::where('name', '=', $tag)->get();	
-		return $query;
+		$tags = explode(',', $value);
+
+		$tagIds = array();
+
+		foreach ($tags as $tagName) {
+			$tag = Tag::firstOrCreate(array('name' => $tagName));
+
+			$tagIds[] = $tag->id;
+		}
+		
+		$this->tags()->sync($tagIds);
 	}
 
-	public static function storeTags($tag,$calendarEvent)
-	{
-		if(CalendarEvent::findTag(trim($tag))->first()){
-			$tags = Tag::where('name', '=' , trim($tag));
-			$calendarEvent->tags()->attach($tags->first()->id);
-		}else{
-			$tags = new Tag();
-			$tags->name = $tag;
-			$calendarEvent->tags()->save($tags);
-		}
-	}
+	// public static function storeTags($tag,$calendarEventId)
+	// {
+	// 	if(CalendarEvent::findTag(trim($tag))->first()){
+	// 		$tagId = Tag::where('name', '=' , trim($tag))->first()['id'];
+	// 		DB::insert("INSERT into calendar_event_tag (calendar_event_id, tag_id) values (?,?)", array($calendarEventId, $tagId));
+	// 	}else{
+	// 		$tags = new Tag();
+	// 		$tags->name = $tag;
+	// 		$tags->save();
+	// 		$tagId = DB::getPdo()->lastInsertId();
+	// 		DB::insert("INSERT into calendar_event_tag (calendar_event_id, tag_id) values (?,?)", array($calendarEventId, $tagId));
+	// 	}
+	// }
 
 	public static function checkAttendance($eventId)
 	{

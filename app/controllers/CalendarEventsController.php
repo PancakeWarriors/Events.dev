@@ -53,15 +53,15 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function store()
 	{
-			$calendarEvent = new CalendarEvent();
-			$calendarEvent->title = Input::get('title');
-			$calendarEvent->start_dateTime = Input::get('start_dateTime');
-			$calendarEvent->end_dateTime = Input::get('end_dateTime');
-			$calendarEvent->description = Input::get('description');
-			$calendarEvent->body = Input::get('body');
-			$calendarEvent->price = Input::get('price');
-			$calendarEvent->user_id = Auth::id();
-			$calendarEvent->location_id = Auth::id();
+			$event = new CalendarEvent();
+			$event->title = Input::get('title');
+			$event->start_dateTime = Input::get('start_dateTime');
+			$event->end_dateTime = Input::get('end_dateTime');
+			$event->description = Input::get('description');
+			$event->body = Input::get('body');
+			$event->price = Input::get('price');
+			$event->user_id = Auth::id();
+			$event->location_id = Auth::id();
 			if(!empty(basename($_FILES['image_url']['name'])) && empty($errors)) {
 			    $uploads_directory = 'images/';
 			    $filename = $uploads_directory . basename($_FILES['image_url']['name']);
@@ -70,18 +70,19 @@ class CalendarEventsController extends \BaseController {
 			    } else {
 			        echo "Sorry, there was an error uploading your file.";
 			    }
-				$calendarEvent->image_url = $filename;   
+				$event->image_url = $filename;   
 			}else{
-				$calendarEvent->image_url = 'images/image.jpeg';   
+				$event->image_url = 'images/image.jpeg';   
 			}
-			$calendarEvent->save();
-			if(Input::get('tags')){
-				$tags = explode(",", Input::get('tags'));
-				foreach ($tags as $tag) {
-					calendarEvent::storeTags($tag,$calendarEvent);
-				}
+
+			if (!$event->save()) {
+				$errors = $event->getErrors();
+				dd($errors);
+			} else {
+				$event->tag_list = Input::get('tags');
+				
+				return Redirect::action('CalendarEventsController@index');
 			}
-			return Redirect::action('CalendarEventsController@index');
 	}
 
 	/**
@@ -134,27 +135,27 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$validator = Validator::make(Input::all(), Post::$rules);
-		if($validator->fails()){
-			return Redirect::back()->withInput()->withErrors($validator);
-		}else{
-			$event = CalendarEvent::find($id);
-			$event->title = Input::get('title');
-			$event->start_dateTime = Input::get('start_dateTime');
-			$event->end_dateTime = Input::get('end_dateTime');
-			$event->description = Input::get('description');
-			$event->body = Input::get('body');
-			$event->price = Input::get('price');
-			$event->user_id = Auth::id();
-			$event->location_id = Auth::id();
-			$event->save();
-			$event->tags()->detach();
-			$tags = explode(",", Input::get('tags'));
-			foreach ($tags as $tag) {
-				CalendarEvent::storeTags($tag,$event);
-			}
-			return Redirect::action('CalendarEventController@show', array($id));
+		$event = CalendarEvent::find($id);
+		$event->id = $id;
+		$event->title = Input::get('title');
+		$event->start_dateTime = Input::get('start_dateTime');
+		$event->end_dateTime = Input::get('end_dateTime');
+		$event->description = Input::get('description');
+		$event->body = Input::get('body');
+		$event->price = Input::get('price');
+		$event->user_id = Auth::id();
+		$event->location_id = Auth::id();
+		$event->save();
+
+		if (!$event->save()) {
+			$errors = $event->getErrors();
+			dd($errors);
+		} else {
+			$event->tag_list = Input::get('tags');
+			
+			return Redirect::back();
 		}
+
 	}
 
 	/**

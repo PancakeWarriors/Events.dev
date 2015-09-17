@@ -14,6 +14,7 @@
 		}
 
 	</style>
+	<link rel="stylesheet" type="text/css" href="/css/datetimepicker.css">
 @stop
 
 @section('content')
@@ -46,28 +47,21 @@
 				</ul>
 			</div>
 		@endif	
-		{{ Form::open(array('action' => 'CalendarEventsController@store', 'enctype' => "multipart/form-data")) }}
+		{{ Form::open(array('action' => array('CalendarEventsController@update', $event->id ), 'enctype' => "multipart/form-data", 'method' => 'PUT'))  }}
 		{{-- <form method="POST" action="{{{action('PostsController@store')}}}"> --}}
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="title">Title</label>
 			<input type="text" class="form-control" id="title" name="title" value="{{{ $event->title }}}">
 		</div>
 		<div class="form-group col-sm-8">
-			<label class="control-label" for="start_dateTime">Start date</label>
-			<input type="date" class="form-control" id="start_date" name="start_date" value="{{{ $event->start_date }}}">
-		</div>
+	        {{ Form::label('start', 'Event Start') }}
+	        {{ Form::text('start_dateTime', $event->start_dateTime, ['class' => 'form-control', 'id' => 'start_dateTime', 'readonly','placeholder' =>'Start Date Time'])}}
+	    </div>
+
 		<div class="form-group col-sm-8">
-			<label class="control-label" for="start_dateTime">Start time (hh:mm:AM/PM)</label>
-			<input type="time" class="form-control" id="start_time" name="start_time" value="{{{ $event->start_time }}}">
-		</div>
-		<div class="form-group col-sm-8">
-			<label class="control-label" for="end_dateTime">End date</label>
-			<input type="date" class="form-control" id="end_date" name="end_date" value="{{{ $event->end_date }}}">
-		</div>
-		<div class="form-group col-sm-8">
-			<label class="control-label" for="end_dateTime">End time (hh:mm:AM/PM)</label>
-			<input type="time" class="form-control" id="end_time" name="end_time" value="{{{ $event->end_time }}}">
-		</div>
+	        {{ Form::label('event_end', 'Event End') }}
+	        {{ Form::text('end_dateTime', $event->end_dateTime, ['class' => 'form-control', 'id' => 'end_dateTime', 'readonly','placeholder' =>'End Date Time'])}}
+	    </div>
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="description">Event Description</label>
 			<textarea data-provide="markdown" class="form-control" id="description" name="description" rows="2" >{{{ $event->description }}}</textarea>
@@ -78,7 +72,10 @@
 		</div>
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="price">Event Price</label>
-			<input type="number" class="form-control" id="price" name="price" rows="15" value="{{{ $event->price }}}">
+			<div class="input-group">
+				<div class="input-group-addon">$</div>
+				<input type="number" class="form-control" id="price" name="price" rows="15" value="{{{ $event->price }}}">
+			</div>
 		</div>
 		<div class="form-group col-sm-8">
 			<label for="tags">Tags</label>
@@ -104,4 +101,26 @@
 	{{-- close row --}}
 	</div>
 </div>
+@stop
+
+@section('script')
+	<script src="/js/datetimepicker.js"></script>
+	<script>
+		jQuery('#start_dateTime').datetimepicker();
+		jQuery('#end_dateTime').datetimepicker();
+
+		//MAKE BUTTON VAL = TEXT VAL
+		$( document ).ready(function() {
+			$('#start_display').val($('#start_dateTime').val());
+			$('#end_display').val($('#end_dateTime').val());
+		});
+
+		$('#start_dateTime').change(function() {
+		    $('#start_display').val($(this).val());
+		});
+
+		$('#end_dateTime').change(function() {
+		    $('#end_display').val($(this).val());
+		});
+	</script>
 @stop
