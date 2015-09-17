@@ -47,27 +47,21 @@
 				</ul>
 			</div>
 		@endif	
-		{{ Form::open(array('action' => 'CalendarEventsController@store', 'enctype' => "multipart/form-data")) }}
+		{{ Form::open(array('action' => array('CalendarEventsController@update', $event->id ), 'enctype' => "multipart/form-data", 'method' => 'PUT'))  }}
 		{{-- <form method="POST" action="{{{action('PostsController@store')}}}"> --}}
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="title">Title</label>
 			<input type="text" class="form-control" id="title" name="title" value="{{{ $event->title }}}">
 		</div>
 		<div class="form-group col-sm-8">
-			{{ Form::label('start_dateTime', 'Start Date Time', ['class' => 'control-label']) }}
-			{{ Form::button('', ['class' => 'glyphicon glyphicon-calendar', 'id' => 'start_dateTime', 'value' => "$event->start_dateTime"]) }}
-			<fieldset disabled>
-				{{ Form::text('title', null, ['class' => 'form-control' , 'id' => 'start_display']) }}
-			</fieldset>
-		</div>
+	        {{ Form::label('start', 'Event Start') }}
+	        {{ Form::text('start_dateTime', $event->start_dateTime, ['class' => 'form-control', 'id' => 'start_dateTime', 'readonly','placeholder' =>'Start Date Time'])}}
+	    </div>
 
 		<div class="form-group col-sm-8">
-			{{ Form::label('end_dateTime', 'End Date Time', ['class' => 'control-label']) }}
-			{{ Form::button('', ['class' => 'glyphicon glyphicon-calendar', 'id' => 'end_dateTime', 'value' => "$event->end_dateTime"]) }}
-			<fieldset disabled>
-				{{ Form::text('title', null, ['class' => 'form-control' , 'id' => 'end_display']) }}
-			</fieldset>
-		</div>
+	        {{ Form::label('event_end', 'Event End') }}
+	        {{ Form::text('end_dateTime', $event->end_dateTime, ['class' => 'form-control', 'id' => 'end_dateTime', 'readonly','placeholder' =>'End Date Time'])}}
+	    </div>
 		<div class="form-group col-sm-8">
 			<label class="control-label" for="description">Event Description</label>
 			<textarea data-provide="markdown" class="form-control" id="description" name="description" rows="2" >{{{ $event->description }}}</textarea>
