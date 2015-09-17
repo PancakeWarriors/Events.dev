@@ -81,6 +81,9 @@ class UsersController extends \BaseController {
 		}
 
 		   // success!
+			Mail::send('emailTemplate', array('firstname'=>Input::get('first_name')), function($message){
+		        $message->to(Input::get('email'), Input::get('firstname').' '.Input::get('lastname'))->subject('Welcome to EventFinder!');
+		    });
 			$email = Input::get('email');
 			$password = Input::get('password');
 			Auth::attempt(array('email' => $email, 'password' => $password));
