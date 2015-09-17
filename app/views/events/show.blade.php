@@ -1,16 +1,24 @@
 @extends('layouts.master')
 
+@section('head')
+	<style type="text/css">
+        #map-canvas {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+@stop
+
 @section('content')
 {{-- /vagrant/sites/events.dev/app/views/events/show.blade.php --}}
 <header id="head" class="secondary"></header>
-
 <!-- container -->
 <div class="container">
 
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li><a href="{{{ action('CalendarEventsController@index')}}}">Events</a></li>
-		<li class="active">Event</li>
+		<li class="active">{{{ $event->title }}}</li>
 	</ol>
 
 	<div class="row">
@@ -98,6 +106,7 @@
 		        </p>
 		    @endif
 
+
 		</article>
 		<!-- /Article -->
 
@@ -112,11 +121,63 @@
 					<h4>No tags found.</h4>
 				@endforelse
 			</div>
+			<h4>Location</h4>
+			<!-- div to hold map -->
+			<div class="col-sm-12"id="map-canvas"></div>
 
 		</aside>
 		<!-- /Sidebar -->
 
 	</div>
+	
+
 </div>	<!-- /container -->
-    
+
+@stop
+@section('script')
+
+	<!-- Load the Google Maps API [DON'T FORGET TO USE A KEY] -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAc7OOhJbXTc7PTiL57yzMNF2xXpyJl9uw"></script>
+
+	<!-- Script to show address on map -->
+	<script type="text/javascript">
+	(function() {
+		"use strict";
+		// Set our address to geocode
+		var address = '{{{ $event->location->address }}}, {{{ $event->location->city }}}, {{{ $event->location->state }}} {{{ $event->location->zip }}}';
+
+		// Init geocoder object
+		var geocoder = new google.maps.Geocoder();
+
+		// Geocode our address
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		  // Check for a successful result
+		  if (status == google.maps.GeocoderStatus.OK) {
+		  // Set our map options
+		    var mapOptions = {
+		      // Set the zoom level
+		      zoom: 16,
+		      // This sets the center of the map at our location
+		      center: results[0].geometry.location
+		    } 
+		    //render the map
+		    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+		    //add marker to existing map
+		    var marker = new google.maps.Marker({
+		    position: results[0].geometry.location,
+		    map: map
+		    });
+		    // Create a new infoWindow object with content
+		    var infowindow = new google.maps.InfoWindow({
+		      content: '<h4>{{{ $event->location->title }}}</h4>{{{ $event->location->address }}}<br>{{{ $event->location->city }}}, {{{ $event->location->state }}}{{{ $event->location->zip }}}'
+		    });
+		    // Open the window using our map and marker
+		    infowindow.open(map,marker);
+		  } else{
+		      // Show an error message with the status if our request fails
+		      alert("Geocoding was not successful - STATUS: " + status);
+		  }
+		});
+	})();
+	</script>
 @stop

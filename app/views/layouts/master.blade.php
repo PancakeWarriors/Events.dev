@@ -49,7 +49,7 @@
 						<li {{ (Request::segment(1) == 'users')? 'class="active"': '' }} class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{{ Auth::user()->email }}}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li {{ !Request::segment(3)? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
+								<li {{ (Request::segment(1) == 'users' && !Request::segment(3))? 'class="active"': '' }}><a href="{{{ action('UsersController@showUser', Auth::id()) }}}">Profile</a></li>
 								<li {{ (Request::segment(3) == 'calendar')? 'class="active"': '' }}><a href="{{{ action('UsersController@showCalendar', Auth::id()) }}}">Calendar</a></li>
 							</ul>
 						</li>
@@ -152,7 +152,7 @@
 	</div>
 
 	<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="/js/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	<script src="/js/headroom.min.js"></script>
 	<script src="/js/jQuery.headroom.min.js"></script>

@@ -27,7 +27,7 @@ class CalendarEventsController extends \BaseController {
 			$tags = DB::table('tags')->get();
 			return View::make('events.index')->with(['calendarEvents'=> $events, 'tags' => $tags]);
 		}else{
-			$events = CalendarEvent::with('user')->orderBy('updated_at', 'desc')->paginate(20);
+			$events = CalendarEvent::with('user')->orderBy('start_dateTime', 'desc')->paginate(20);
 			$tags = DB::table('tags')->get();
 			return View::make('events.index')->with(['calendarEvents' => $events, 'tags' => $tags]);
 		}
@@ -98,7 +98,8 @@ class CalendarEventsController extends \BaseController {
 			$event = CalendarEvent::find($id);
 			$user = User::find(CalendarEvent::find($id)->user_id);
 			$tags = DB::table('tags')->get();
-			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
+			$location = Location::find(CalendarEvent::find($id)->location_id);
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user, 'location' => $location]);
 		}else{
 			App::abort(404);
 		}

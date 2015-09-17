@@ -10,8 +10,11 @@
 
 		<ol class="breadcrumb">
 			<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-			<li class="active">User Profile</li>
+			<li><a href="{{{ action('UsersController@showUser', Auth::id())}}}">User Profile</a></li>
+			<li class="active">Events Calendar</li>
 		</ol>
+
+		{{-- {{ $user->calendar_events[0]->title }} --}}
 
 		<div class="row">
 			{{-- show message --}}
@@ -28,13 +31,14 @@
 							<button class="btn btn-primary" data-calendar-nav="next">Next ></button>
 						</div>
 						<div class="btn-group btn-group-sm">
-							<button class="btn btn-warning" data-calendar-view="year">Year</button>
-							<button class="btn btn-warning active" data-calendar-view="month">Month</button>
-							<button class="btn btn-warning" data-calendar-view="week">Week</button>
-							<button class="btn btn-warning" data-calendar-view="day">Day</button>
+							<button class="btn btn-default" data-calendar-view="year">Year</button>
+							<button class="btn btn-default active" data-calendar-view="month">Month</button>
+							<button class="btn btn-default" data-calendar-view="week">Week</button>
+							<button class="btn btn-default" data-calendar-view="day">Day</button>
 						</div>
 					</div>
-					<h1 class="page-title">{{ $user->first_name }} {{ $user->last_name }}</h1>
+					{{-- header that changes according to the date/day --}}
+					<h3></h3>
 				
 				</header>	
 
@@ -52,13 +56,20 @@
 <!--    <script type="text/javascript" src="/vendor/bootstrap-calendar/js/app.js"></script> -->
     <script type="text/javascript">
         "use strict";
+        var today = new Date();
+		var year = today.getFullYear();
+		var month = '0' + (today.getMonth()+1);
+		var day = today.getDate();
+
+		var todayFormated = year + '-' + month + '-' + day;
+		console.log(todayFormated);
 
         var options = {
-        	events_source: 'events.json.php',
+        	events_source: '../../../user/calendarjson',
         	view: 'month',
         	tmpl_path: '/vendor/bootstrap-calendar/tmpls/',
         	tmpl_cache: false,
-        	day: '2013-03-12',
+        	day: todayFormated,
         	onAfterEventsLoad: function(events) {
         		if(!events) {
         			return;

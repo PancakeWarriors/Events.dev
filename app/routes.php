@@ -27,6 +27,8 @@ Route::get('signout', 'UsersController@doLogout');
 
 Route::get('users/{id}', 'UsersController@showUser');
 
+Route::get('user/calendarjson', 'UsersController@showEventsJson');
+
 Route::get('users/{id}/calendar', 'UsersController@showCalendar');
 
 Route::get('signup', 'UsersController@showCreate');
