@@ -15,9 +15,7 @@
 		#map-canvas {
 		    width: 100%;
 		    height: 400px;
-		    background-color: blue;
 		}
-
 	</style>
 	<link rel="stylesheet" type="text/css" href="/css/datetimepicker.css">
 @stop
@@ -32,8 +30,8 @@
 		<div class="col-sm-12">
 			<ol class="breadcrumb">
 				<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-				<li><a href="{{{ action('CalendarEventsController@show')}}}">Events</a></li>
-				<li class="active">Create</li>
+				<li><a href="/events/{{{$event->id}}}">Events</a></li>
+				<li class="active">Edit</li>
 			</ol>
 		</div>
 	</div>
@@ -84,23 +82,23 @@
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationTitle', 'Name of location') }}
-			{{ Form::text('locationTitle', $event->location->title, ['class' => 'form-control location', 'id' => 'locationTitle']) }}
+			{{ Form::text('place', $event->location->title, ['class' => 'form-control location', 'id' => 'locationTitle']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationAddress', 'Street number and name') }}
-			{{ Form::text('locationAddress', $event->location->address, ['class' => 'form-control location', 'id' => 'locationAddress']) }}
+			{{ Form::text('address', $event->location->address, ['class' => 'form-control location', 'id' => 'locationAddress']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationCity', 'City') }}
-			{{ Form::text('locationCity', $event->location->city, ['class' => 'form-control location', 'id' => 'locationCity']) }}
+			{{ Form::text('city', $event->location->city, ['class' => 'form-control location', 'id' => 'locationCity']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationState', 'State') }}
-			{{ Form::text('locationState', $event->location->state, ['class' => 'form-control location', 'id' => 'locationState']) }}
+			{{ Form::text('state', $event->location->state, ['class' => 'form-control location', 'id' => 'locationState']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationZip', 'Zip') }}
-			{{ Form::text('locationZip', $event->location->zip, ['class' => 'form-control location', 'id' => 'locationZip']) }}
+			{{ Form::text('zip', $event->location->zip, ['class' => 'form-control location', 'id' => 'locationZip']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			<h4>Location</h4>
@@ -161,6 +159,49 @@
 	<script type="text/javascript">
 		"use strict";
 		(function() {
+			if($('#locationTitle').val() && $('#locationAddress').val() && $('#locationCity').val() && $('#locationState').val() && $('#locationZip').val()){
+				var locationTitle = $('#locationTitle').val();
+				var locationAddress = $('#locationAddress').val();
+				var locationCity = $('#locationCity').val();
+				var locationState = $('#locationState').val();
+				var locationZip = $('#locationZip').val();
+
+				// Set our address to geocode
+				var address = locationAddress+", "+locationCity+", "+locationState+" "+locationZip;
+
+				// Init geocoder object
+				var geocoder = new google.maps.Geocoder();
+
+				// Geocode our address
+				geocoder.geocode( { 'address': address}, function(results, status) {
+				  // Check for a successful result
+				  if (status == google.maps.GeocoderStatus.OK) {
+				  // Set our map options
+				    var mapOptions = {
+				      // Set the zoom level
+				      zoom: 16,
+				      // This sets the center of the map at our location
+				      center: results[0].geometry.location
+				    } 
+				    //render the map
+				    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+				    //add marker to existing map
+				    var marker = new google.maps.Marker({
+				    position: results[0].geometry.location,
+				    map: map
+				    });
+				    // Create a new infoWindow object with content
+				    var infowindow = new google.maps.InfoWindow({
+				      content: '<h4>'+locationTitle+'</h4>'+locationAddress+'<br>'+locationCity+', '+locationState+' '+locationZip
+				    });
+				    // Open the window using our map and marker
+				    infowindow.open(map,marker);
+				  } else{
+				      // Show an error message with the status if our request fails
+				      alert("Error finding address. Please check your location input fields.");
+				  }
+				});
+			}
 			$('.location').change(function(){
 				if($('#locationTitle').val() && $('#locationAddress').val() && $('#locationCity').val() && $('#locationState').val() && $('#locationZip').val()){
 					var locationTitle = $('#locationTitle').val();

@@ -3,7 +3,7 @@
 use \Esensi\Model\Model;
 
 class CalendarEvent extends Model {
-	protected $fillable = [];
+	protected $fillable = array('tag', 'name');
 	protected $table = 'calendar_events';
 
 	public function location()

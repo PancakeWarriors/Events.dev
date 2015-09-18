@@ -2,26 +2,15 @@
 
 class LocationsController extends \BaseController {
 
-	public function index()
+	public static function store()
 	{
-		//
+		$location = new Location();
+		$location->place = Input::get('place');
+		$location->address = Input::get('address');
+		$location->city = Input::get('city');
+		$location->state = Input::get('state');
+		$location->zip = Input::get('zip');
+		$location->save();
+
 	}
-
-	public function create()
-	{
-		//
-	}
-
-	public function store()
-	{
-		//
-	}
-
-	public function show($id)
-	{
-		//
-	}
-
-
-
 }

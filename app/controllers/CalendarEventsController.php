@@ -1,4 +1,4 @@
-7<?php
+<?php
 
 class CalendarEventsController extends \BaseController {
 
@@ -51,8 +51,17 @@ class CalendarEventsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
 	public function store()
 	{
+		$location = DB::table('locations')
+			->where('place', '=', Input::get('place'))
+			->where('address', '=', Input::get('address'))
+			->where('city', '=', Input::get('city'))
+			->where('state', '=', Input::get('state'))
+			->where('zip', '=', Input::get('zip'));
+
+
 			$event = new CalendarEvent();
 			$event->title = Input::get('title');
 			$event->start_dateTime = Input::get('start_dateTime');
@@ -61,23 +70,22 @@ class CalendarEventsController extends \BaseController {
 			$event->body = Input::get('body');
 			$event->price = Input::get('price');
 			$event->user_id = Auth::id();
-			$event->location_id = Auth::id();
-			if(!empty(basename($_FILES['image_url']['name'])) && empty($errors)) {
-			    $uploads_directory = 'images/';
-			    $filename = $uploads_directory . basename($_FILES['image_url']['name']);
-			    if (move_uploaded_file($_FILES['image_url']['tmp_name'], $filename)) {
-			        echo '<p>The file '. basename( $_FILES['image_url']['name']). ' has been uploaded.</p>';
-			    } else {
-			        echo "Sorry, there was an error uploading your file.";
-			    }
-				$event->image_url = $filename;   
+			if($location->first()){
+				$event->location_id = $location->first()->id;
 			}else{
-				$event->image_url = 'images/image.jpeg';   
+				$location = new Location();
+				$location->place = Input::get('place');
+				$location->address = Input::get('address');
+				$location->city = Input::get('city');
+				$location->state = Input::get('state');
+				$location->zip = Input::get('zip');
+				$location->save();
+				$event->location_id = $location->id;
 			}
+			$event->image_url = 'images/image.jpeg';   
 
 			if (!$event->save()) {
 				$errors = $event->getErrors();
-				dd($errors);
 			} else {
 				$event->tag_list = Input::get('tags');
 				
@@ -135,8 +143,8 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function update($id)
 	{
+
 		$event = CalendarEvent::find($id);
-		$event->id = $id;
 		$event->title = Input::get('title');
 		$event->start_dateTime = Input::get('start_dateTime');
 		$event->end_dateTime = Input::get('end_dateTime');
@@ -149,11 +157,11 @@ class CalendarEventsController extends \BaseController {
 
 		if (!$event->save()) {
 			$errors = $event->getErrors();
-			dd($errors);
 		} else {
+			$tags = DB::table('tags')->get();
 			$event->tag_list = Input::get('tags');
-			
-			return Redirect::back();
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}
 
 	}
