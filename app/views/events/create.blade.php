@@ -31,7 +31,7 @@
 		<div class="col-sm-12">
 			<ol class="breadcrumb">
 				<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-				<li><a href="{{{ action('CalendarEventsController@show')}}}">Events</a></li>
+				<li><a href="/events">Events</a></li>
 				<li class="active">Create</li>
 			</ol>
 		</div>
@@ -84,23 +84,23 @@
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationTitle', 'Name of location') }}
-			{{ Form::text('locationTitle', null, ['class' => 'form-control location', 'id' => 'locationTitle']) }}
+			{{ Form::text('place', null, ['class' => 'form-control location', 'id' => 'locationTitle']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationAddress', 'Street number and name') }}
-			{{ Form::text('locationAddress', null, ['class' => 'form-control location', 'id' => 'locationAddress']) }}
+			{{ Form::text('address', null, ['class' => 'form-control location', 'id' => 'locationAddress']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationCity', 'City') }}
-			{{ Form::text('locationCity', null, ['class' => 'form-control location', 'id' => 'locationCity']) }}
+			{{ Form::text('city', null, ['class' => 'form-control location', 'id' => 'locationCity']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationState', 'State') }}
-			{{ Form::text('locationState', null, ['class' => 'form-control location', 'id' => 'locationState']) }}
+			{{ Form::text('state', null, ['class' => 'form-control location', 'id' => 'locationState']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			{{ Form::label('locationZip', 'Zip') }}
-			{{ Form::text('locationZip', null, ['class' => 'form-control location', 'id' => 'locationZip']) }}
+			{{ Form::text('zip', null, ['class' => 'form-control location', 'id' => 'locationZip']) }}
 		</div>
 		<div class="form-group col-sm-8">
 			<h4>Location</h4>

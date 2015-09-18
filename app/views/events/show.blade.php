@@ -6,6 +6,10 @@
             width: 100%;
             height: 400px;
         }
+        .tags{
+        	background-color: lightyellow;
+        	padding: 2px;
+        }
     </style>
 @stop
 
@@ -18,7 +22,7 @@
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li><a href="{{{ action('CalendarEventsController@index')}}}">Events</a></li>
-		<li class="active">{{{ $event->title }}}</li>
+		<li class="active"><a href="/events/{{{$event->id}}}">{{{ $event->title }}}</a></li>
 	</ol>
 
 	<div class="row">
@@ -116,7 +120,7 @@
 			<div class="widget">
 				<h4>Categories</h4>
 				@forelse($tags as $tag)
-					<a href="?t={{$tag->name}}"><h5>{{{$tag->name}}}</h5></a>
+					<a href="?t={{$tag->name}}"><span class="tags">{{{$tag->name}}}</span></a>
 				@empty
 					<h4>No tags found.</h4>
 				@endforelse

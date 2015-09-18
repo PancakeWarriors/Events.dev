@@ -30,6 +30,7 @@
 			<h3 class="text-center thin">Reasons to use this template</h3>
 
 			<div class="row">
+				{{dd(CalendarEventsController::test()->first())}}
 				<div class="col-md-3 col-sm-6 highlight">
 					<div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>Bootstrap-powered</h4></div>
 					<div class="h-body text-center">
