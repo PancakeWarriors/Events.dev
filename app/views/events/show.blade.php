@@ -118,9 +118,9 @@
 		<aside class="col-sm-4 sidebar sidebar-right">
 
 			<div class="widget">
-				<h4>Categories</h4>
-				@forelse($tags as $tag)
-					<a href="?t={{$tag->name}}"><span class="tags">{{{$tag->name}}}</span></a>
+				<h4>Tags</h4>
+				@forelse($event->tags as $tag)
+					<span class="tags">{{{$tag->name}}}</span>
 				@empty
 					<h4>No tags found.</h4>
 				@endforelse
