@@ -31,9 +31,6 @@
 
 <body class="home">
 	<!-- Fixed navbar -->
-
-	{{-- {{ Request::segment(2) }} --}}
-
 	<div class="navbar navbar-inverse navbar-fixed-top headroom" >
 		<div class="container">
 			<div class="navbar-header">

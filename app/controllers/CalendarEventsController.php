@@ -62,37 +62,47 @@ class CalendarEventsController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
 	public function store()
 	{
-			$calendarEvent = new CalendarEvent();
-			$calendarEvent->title = Input::get('title');
-			$calendarEvent->start_dateTime = Input::get('start_dateTime');
-			$calendarEvent->end_dateTime = Input::get('end_dateTime');
-			$calendarEvent->description = Input::get('description');
-			$calendarEvent->body = Input::get('body');
-			$calendarEvent->price = Input::get('price');
-			$calendarEvent->user_id = Auth::id();
-			$calendarEvent->location_id = Auth::id();
-			if(!empty(basename($_FILES['image_url']['name'])) && empty($errors)) {
-			    $uploads_directory = 'images/';
-			    $filename = $uploads_directory . basename($_FILES['image_url']['name']);
-			    if (move_uploaded_file($_FILES['image_url']['tmp_name'], $filename)) {
-			        echo '<p>The file '. basename( $_FILES['image_url']['name']). ' has been uploaded.</p>';
-			    } else {
-			        echo "Sorry, there was an error uploading your file.";
-			    }
-				$calendarEvent->image_url = $filename;   
+
+		$location = DB::table('locations')
+			->where('place', '=', Input::get('place'))
+			->where('address', '=', Input::get('address'))
+			->where('city', '=', Input::get('city'))
+			->where('state', '=', Input::get('state'))
+			->where('zip', '=', Input::get('zip'));
+
+
+			$event = new CalendarEvent();
+			$event->title = Input::get('title');
+			$event->start_dateTime = Input::get('start_dateTime');
+			$event->end_dateTime = Input::get('end_dateTime');
+			$event->description = Input::get('description');
+			$event->body = Input::get('body');
+			$event->price = Input::get('price');
+			$event->user_id = Auth::id();
+			if($location->first()){
+				$event->location_id = $location->first()->id;
 			}else{
-				$calendarEvent->image_url = 'images/image.jpeg';   
+				$location = new Location();
+				$location->place = Input::get('place');
+				$location->address = Input::get('address');
+				$location->city = Input::get('city');
+				$location->state = Input::get('state');
+				$location->zip = Input::get('zip');
+				$location->save();
+				$event->location_id = $location->id;
 			}
-			$calendarEvent->save();
-			if(Input::get('tags')){
-				$tags = explode(",", Input::get('tags'));
-				foreach ($tags as $tag) {
-					calendarEvent::storeTags($tag,$calendarEvent);
-				}
+			$event->image_url = 'images/image.jpeg';   
+
+			if (!$event->save()) {
+				$errors = $event->getErrors();
+			} else {
+				$event->tag_list = Input::get('tags');
+				
+				return Redirect::action('CalendarEventsController@index');
 			}
-			return Redirect::action('CalendarEventsController@index');
 	}
 
 	/**
@@ -145,26 +155,25 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$validator = Validator::make(Input::all(), Post::$rules);
-		if($validator->fails()){
-			return Redirect::back()->withInput()->withErrors($validator);
-		}else{
-			$event = CalendarEvent::find($id);
-			$event->title = Input::get('title');
-			$event->start_dateTime = Input::get('start_dateTime');
-			$event->end_dateTime = Input::get('end_dateTime');
-			$event->description = Input::get('description');
-			$event->body = Input::get('body');
-			$event->price = Input::get('price');
-			$event->user_id = Auth::id();
-			$event->location_id = Auth::id();
-			$event->save();
-			$event->tags()->detach();
-			$tags = explode(",", Input::get('tags'));
-			foreach ($tags as $tag) {
-				CalendarEvent::storeTags($tag,$event);
-			}
-			return Redirect::action('CalendarEventController@show', array($id));
+
+		$event = CalendarEvent::find($id);
+		$event->title = Input::get('title');
+		$event->start_dateTime = Input::get('start_dateTime');
+		$event->end_dateTime = Input::get('end_dateTime');
+		$event->description = Input::get('description');
+		$event->body = Input::get('body');
+		$event->price = Input::get('price');
+		$event->user_id = Auth::id();
+		$event->location_id = Auth::id();
+		$event->save();
+
+		if (!$event->save()) {
+			$errors = $event->getErrors();
+		} else {
+			$tags = DB::table('tags')->get();
+			$event->tag_list = Input::get('tags');
+			$user = User::find(CalendarEvent::find($id)->user_id);
+			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}
 	}
 

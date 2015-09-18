@@ -13,6 +13,10 @@
 
 			bottom: 5px;
 		}
+		.tags{
+			background-color: lightyellow;
+			padding: 2px;
+		}
 	</style>
 @stop
 
@@ -25,7 +29,7 @@
 
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-		<li class="active">Events</li>
+		<li class="active"><a href="/events">Events</a></li>
 	</ol>
 
 	<div class="row">
@@ -57,7 +61,7 @@
 		<!-- Sidebar -->
 		<aside class="col-sm-4 sidebar sidebar-right">
 
-			<div class="widget">
+			{{-- <div class="widget">
 				<!-- Search Well -->
 				<div class="widget">
 				    <h4>Search Events</h4>
@@ -73,11 +77,11 @@
 				    {{ Form::close() }}
 				    <!-- /.input-group -->
 				</div>
-			</div>
+			</div> --}}
 			<div class="widget">
 				<h4>Categories</h4>
 				@forelse($tags as $tag)
-					<a href="?t={{$tag->name}}"><h5>{{{$tag->name}}}</h5></a>
+					<a href="?t={{$tag->name}}"><span class="tags">{{{$tag->name}}}</span></a>
 				@empty
 					<h4>No tags found.</h4>
 				@endforelse

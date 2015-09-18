@@ -11,8 +11,8 @@ class LocationsTableSeeder extends Seeder {
 
 		for($i=0; $i<20; $i++)
 		{
-			$location = new Locations();
-			$location->title = $faker->text(20);
+			$location = new Location();
+			$location->place = $faker->text(20);
 			$location->address = $faker->streetAddress();
 			$location->city = $faker->city();
 			$location->state = $faker->stateAbbr();

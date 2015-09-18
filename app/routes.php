@@ -12,7 +12,6 @@
 */
 
 // HOME
-
 Route::get('/', 'HomeController@showHome');
 
 Route::get('/signin', 'UsersController@showLogin');

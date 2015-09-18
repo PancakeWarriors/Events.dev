@@ -6,6 +6,10 @@
             width: 100%;
             height: 400px;
         }
+        .tags{
+        	background-color: lightyellow;
+        	padding: 2px;
+        }
     </style>
 @stop
 
@@ -18,7 +22,7 @@
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li><a href="{{{ action('CalendarEventsController@index')}}}">Events</a></li>
-		<li class="active">{{{ $event->title }}}</li>
+		<li class="active"><a href="/events/{{{$event->id}}}">{{{ $event->title }}}</a></li>
 	</ol>
 
 	<div class="row">
@@ -114,9 +118,9 @@
 		<aside class="col-sm-4 sidebar sidebar-right">
 
 			<div class="widget">
-				<h4>Categories</h4>
-				@forelse($tags as $tag)
-					<a href="?t={{$tag->name}}"><h5>{{{$tag->name}}}</h5></a>
+				<h4>Tags</h4>
+				@forelse($event->tags as $tag)
+					<span class="tags">{{{$tag->name}}}</span>
 				@empty
 					<h4>No tags found.</h4>
 				@endforelse
@@ -169,7 +173,7 @@
 		    });
 		    // Create a new infoWindow object with content
 		    var infowindow = new google.maps.InfoWindow({
-		      content: '<h4>{{{ $event->location->title }}}</h4>{{{ $event->location->address }}}<br>{{{ $event->location->city }}}, {{{ $event->location->state }}} {{{ $event->location->zip }}}'
+		      content: '<h4>{{{ $event->location->place }}}</h4>{{{ $event->location->address }}}<br>{{{ $event->location->city }}}, {{{ $event->location->state }}} {{{ $event->location->zip }}}'
 		    });
 		    // Open the window using our map and marker
 		    infowindow.open(map,marker);
