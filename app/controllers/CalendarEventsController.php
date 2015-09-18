@@ -16,6 +16,17 @@ class CalendarEventsController extends \BaseController {
 	 */
 	public function index()
 	{
+		if(Input::has('search')){
+			$query = CalendarEvent::with('user');
+
+			$query->whereHas('user', function($q){
+				$search = Input::get('search');
+				$q->where('title', 'like', "%$search%");
+			});
+			$events = $query->orderBy('created_at', 'desc')->paginate(4);
+			$tags = DB::table('tags')->get();
+			return View::make('events.index')->with(array('calendarEvents' => $events, 'tags' => $tags));
+		}
 		if(Input::has('t')){
 			$query = CalendarEvent::with('tags');
 			$query->WhereHas('tags', function($q){
@@ -54,6 +65,7 @@ class CalendarEventsController extends \BaseController {
 
 	public function store()
 	{
+
 		$location = DB::table('locations')
 			->where('place', '=', Input::get('place'))
 			->where('address', '=', Input::get('address'))
@@ -163,7 +175,6 @@ class CalendarEventsController extends \BaseController {
 			$user = User::find(CalendarEvent::find($id)->user_id);
 			return View::make('events.show')->with(['event' => $event, 'tags' => $tags, 'user' => $user]);
 		}
-
 	}
 
 	/**

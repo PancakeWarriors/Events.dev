@@ -50,6 +50,7 @@
 								<li {{ (Request::segment(3) == 'calendar')? 'class="active"': '' }}><a href="{{{ action('UsersController@showCalendar', Auth::id()) }}}">Calendar</a></li>
 							</ul>
 						</li>
+						<li><a href="{{{ action('CalendarEventsController@create') }}}"><span class="glyphicon glyphicon-plus-sign"></span> Create Event</a></li>
 						<li><a class="btn" href="{{{ action('UsersController@doLogout') }}}">Logout</a></li>
 					@else
 						<li {{ Request::is('signin')? 'class="active"': '' }}><a class="btn" href="{{{ action('UsersController@showLogin') }}}">SIGN IN / SIGN UP</a></li>
