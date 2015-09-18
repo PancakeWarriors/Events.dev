@@ -27,7 +27,6 @@
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
 		<li class="active">Events</li>
 	</ol>
-	<h3><a class="pull-right" href="/events/create">New Event?</a></h3>
 
 	<div class="row">
 
@@ -58,6 +57,23 @@
 		<!-- Sidebar -->
 		<aside class="col-sm-4 sidebar sidebar-right">
 
+			<div class="widget">
+				<!-- Search Well -->
+				<div class="widget">
+				    <h4>Search Events</h4>
+				    {{ Form::open(array('action' => array('CalendarEventsController@index'), 'role' => 'search', 'method' => 'GET')) }}
+				        <div class="input-group">
+				            <input type="text" class="form-control" name="search">
+				            <span class="input-group-btn">
+				                <button class="btn btn-default" type="submit">
+				                    <span class="glyphicon glyphicon-search"></span>
+				                </button>
+				            </span>
+				        </div>
+				    {{ Form::close() }}
+				    <!-- /.input-group -->
+				</div>
+			</div>
 			<div class="widget">
 				<h4>Categories</h4>
 				@forelse($tags as $tag)
