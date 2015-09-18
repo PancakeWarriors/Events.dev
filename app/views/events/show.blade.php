@@ -173,7 +173,7 @@
 		    });
 		    // Create a new infoWindow object with content
 		    var infowindow = new google.maps.InfoWindow({
-		      content: '<h4>{{{ $event->location->title }}}</h4>{{{ $event->location->address }}}<br>{{{ $event->location->city }}}, {{{ $event->location->state }}} {{{ $event->location->zip }}}'
+		      content: '<h4>{{{ $event->location->place }}}</h4>{{{ $event->location->address }}}<br>{{{ $event->location->city }}}, {{{ $event->location->state }}} {{{ $event->location->zip }}}'
 		    });
 		    // Open the window using our map and marker
 		    infowindow.open(map,marker);

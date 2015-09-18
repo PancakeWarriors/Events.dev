@@ -29,9 +29,9 @@
 
 	<ol class="breadcrumb">
 		<li><a href="{{{ action('HomeController@showHome')}}}">Home</a></li>
-		<li class="active">Events</li>
+		<li class="active"><a href="/events">Events</a></li>
 	</ol>
-	<h3><a class="pull-right" href="/events/create">New Event?</a></h3>
+	<h2><a class="pull-right" href="/events/create">New Event?</a></h2>
 
 	<div class="row">
 
