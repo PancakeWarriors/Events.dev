@@ -42,6 +42,7 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<h3 class="thin text-center">Create a free account</h3>
+						<p class="text-center text-muted">Already have an account? <a href="signin">Signin</a> instead. </p>
 						<hr>
 
 						{{ Form::open(array('action' => 'UsersController@newUser')) }}
