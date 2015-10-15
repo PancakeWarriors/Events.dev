@@ -58,7 +58,12 @@
         "use strict";
         var today = new Date();
 		var year = today.getFullYear();
-		var month = '0' + (today.getMonth()+1);
+        var monthLength = (today.getMonth()+1).toString().length;
+        if(monthLength > 1){
+    		var month = (today.getMonth()+1);
+        }else{
+            var month = '0' + (today.getMonth()+1);
+        }
 		var day = today.getDate();
 
 		var todayFormated = year + '-' + month + '-' + day;
